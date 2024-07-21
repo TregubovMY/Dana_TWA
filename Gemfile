@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source "http://rubygems.org"
 
 ruby "3.3.1"
 
@@ -50,6 +50,14 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', require: false
+
+  gem "letter_opener"
+
+  gem "faker"
 end
 
 group :development do
@@ -63,3 +71,24 @@ group :development do
   # gem "spring"
 end
 
+gem "kaminari"
+
+gem "paranoia"
+
+gem "slim-rails"
+
+gem "draper"
+
+gem "rails-i18n"
+
+gem "has_scope"
+
+gem "devise"
+
+gem "devise-bootstrap-views"
+
+gem "cancancan"
+
+gem "hotwire-rails"
+
+gem "telegram-bot"

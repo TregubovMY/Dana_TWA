@@ -1,0 +1,25 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3.1
+  Exclude:
+    - db/schema.rb
+    - db/migrate/*.rb
+    - Gemfile
+    - Gemfile.lock
+    - config/**/*
+    - bin/**/*
+    - config.ru
+    - Rakefile
+
+Style/Documentation:
+  Enabled: false
+
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
