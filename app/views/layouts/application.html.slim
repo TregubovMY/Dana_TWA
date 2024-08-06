@@ -1,12 +1,22 @@
 doctype html
 html
   head
-    title
-      | DanaTWA
+    title = t('dana')
     meta name="viewport" content="width=device-width,initial-scale=1"
     == csrf_meta_tags
     == csp_meta_tag
     == stylesheet_link_tag "application", "data-turbo-track": "reload"
     == javascript_include_tag "application", "data-turbo-track": "reload", defer: true, type: "module"
   body
-    == yield
+    .container-fluid.d-flex.min-vh-100
+      .row.flex-grow-1.bg-light.bg-gradient
+        - if current_user
+          .col-2.d-flex.flex-column.bg-dark.bg-gradient
+            = render 'shared/menu'
+
+          .content.col-10.p-4.mt-4
+            = render partial: 'shared/flash'
+            = yield
+        - else
+          .content.p-4
+            = yield

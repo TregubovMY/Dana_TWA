@@ -1,42 +1,32 @@
-h2
-  | Edit
-  = resource_name.to_s.humanize
+h2 = t('.edit_profile')
+
 = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
   = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    div
-      | Currently waiting confirmation for:
-      = resource.unconfirmed_email
-  .field
-    = f.label :password
-    i
-      | (leave blank if you don't want to change it)
-    br
-    = f.password_field :password, autocomplete: "new-password"
+  / .form-group.mb-3
+    = f.label :email, class: 'form-label'
+    = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control'
+  / - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+    .alert.alert-warning
+      = t('.currently_waiting_confirmation_for', unconfirmed_email: resource.unconfirmed_email)
+  .form-group.mb-3
+    = f.label :username, class: 'label'
+    = f.text_field :username, autofocus: true, autocomplete: "name", class: 'form-control'
+  .form-group.mb-3
+    = f.label :password, class: 'form-label'
     - if @minimum_password_length
-      br
-      em
-        = @minimum_password_length
-        |  characters minimum
-  .field
-    = f.label :password_confirmation
+      em = ' ' + t('global.minimum_password_length', minimum_password_length: @minimum_password_length)
+    = f.password_field :password, autocomplete: "new-password", class: 'form-control'
+  .form-group.mb-3
+    = f.label :password_confirmation, class: 'form-label'
     br
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .field
-    = f.label :current_password
-    i
-      | (we need your current password to confirm your changes)
-    br
-    = f.password_field :current_password, autocomplete: "current-password"
+    = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control'
+  .form-group.mb-3
+    = f.label :current_password, class: 'form-label'
+    = f.password_field :current_password, autocomplete: "current-password", class: 'form-control'
   .actions
-    = f.submit "Update"
-h3
-  | Cancel my account
+    = f.submit t('global.button.update'), class: 'form-control btn btn-primary submit px-3 mb-2'
 div
-  | Unhappy?
-  = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete
-= link_to "Back", :back
+  = button_to t('.cancel_my_account'), registration_path(resource_name),
+          data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete,
+          class: 'btn btn-danger mb-2'
+= link_to t('global.button.back'), :back, class: 'btn btn-secondary'

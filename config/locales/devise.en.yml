@@ -51,6 +51,7 @@ en:
       new:
         resend_confirmation_link: "Resend confirmation link?"
         already_member: "Already a member?"
+        sign_up: "Sign up"
       edit:
         edit_profile: "Edit profile"
         currently_waiting_confirmation_for: "Currently waiting confirmation for: %{unconfirmed_email}"
@@ -66,6 +67,7 @@ en:
       updated_but_not_signed_in: "Your account has been updated successfully, but since your password was changed, you need to sign in again."
     sessions:
       new:
+        log_in: "Log in"
         forgot_password: "Forgot your password?"
         dont_have_account: "Don't have an account?"
       signed_in: "Signed in successfully."

@@ -1,2 +1,44 @@
 ru:
-  hello: Привет мир!
+  dana: Дана
+  en: Английский
+  ru: Русский
+  activerecord:
+    attributes:
+      user:
+        created_at: Создана
+        email: Почта
+        username: Имя
+        role: Роль
+        current_password: Текущий пароль
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        updated_at: Обновлено
+        remember_me: Запомнить меня
+  navigation:
+    reports: Отчеты
+    users: Пользователи
+    products: Продукты
+    orders: Заказы
+    mailing: Рассылка
+    log_out: Выйти
+    user_profile: Профиль пользователя
+  global:
+    remember_me: Запомнить меня
+    title_filter: Фильтр
+    user:
+      roles:
+        user: Пользователь
+        moderator: Модератор
+        admin: Админ
+    button:
+      delete: Удалить
+      edit: Изменить
+      show: Показать
+      submit: Отправить
+      restore: Восстановить
+      take_book: Взять книгу
+      return_book: Вернуть книгу
+      filter: Фильтровать
+      update: Обновить
+      back: Назад
+      close: Закрыть

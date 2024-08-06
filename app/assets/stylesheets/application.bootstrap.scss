@@ -1,2 +1,46 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+.sidebar {
+  padding-left: 40px;
+  a {
+    padding: 10px 10px 10px 0;
+    font-size: large;
+    color: white;
+  }
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #0dcaf0; /* Светло-серый цвет при наведении */
+}
+
+.flag {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background: url('flags.png') no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+}
+
+.ru-flag {
+  background-position: -1px -0px;
+
+}
+.en-flag {
+  background-position: -1px -17px;
+}
+
+.nav {
+  .flag {
+    position: relative;
+    top: 2px;
+  }
+}
+
+.alert-notice {
+  color: #0c5460;
+  background-color: #d1ecf1;
+}

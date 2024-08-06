@@ -45,6 +45,7 @@ ru:
       new:
         resend_confirmation_link: "Повторно отправить ссылку для подтверждения?"
         already_member: "Есть учетная запись?"
+        sign_up: "Регистрация"
       edit:
         edit_profile: "Редактировать профиль"
         currently_waiting_confirmation_for: "В данный момент ожидается подтверждение для: %{unconfirmed_email}"
@@ -59,6 +60,7 @@ ru:
       updated: "Ваша учётная запись успешно обновлена."
     sessions:
       new:
+        log_in: "Вход"
         forgot_password: "Забыли свой пароль?"
         dont_have_account: "У вас нет учетной записи?"
       signed_in: "Вход в систему выполнен."

@@ -1,0 +1,43 @@
+.sidebar.d-flex.flex-column.flex-grow-1
+  h3.mt-5.mb-5.text-white = t('dana')
+  ul.nav.nav-pills.flex-column
+    li.nav-item
+      = link_to t('navigation.reports'), '#', class: 'nav-link'
+    li.nav-item
+      = link_to t('navigation.users'), '#', class: 'nav-link'
+    li.nav-item
+      = link_to t('navigation.products'), '#', class: 'nav-link'
+    li.nav-item
+      = link_to t('navigation.orders'), '#', class: 'nav-link'
+    li.nav-item
+      = link_to t('navigation.mailing'), '#', class: 'nav-link'
+  .user-info.mt-auto.mb-5
+    ul.nav.col-12.col-lg-auto.mb-2.mb-md-0
+      li.dropdown
+        = link_to '#', class: 'nav-link dropdown-toggle',
+                data: { 'bs-toggle': 'dropdown' } do
+          = tag.div '', class: "flag mt-1"
+          = t I18n.locale
+
+        ul.dropdown-menu.p-3
+          - I18n.available_locales.each do |locale|
+            li.px-2
+              - if I18n.locale == locale
+                = tag.span t(locale), class: 'dropdown-item p-0 text-black'
+              - else
+                = link_to t(locale), url_for(locale: locale), class: 'dropdown-item p-0 text-black'
+
+    .nav.col-12.col-lg-auto.mb-2.mb-md-0
+      - if user_signed_in?
+        li.dropdown
+          = link_to current_user.decorate.name_with_sign, '#', class: 'nav-link dropdown-toggle',
+                  data: { 'bs-toggle': 'dropdown' }
+
+          ul.dropdown-menu
+            li = link_to t('navigation.user_profile'), edit_user_registration_path,
+                    class: 'dropdown-item px-2 text-black'
+
+            li.dropdown-divider
+
+            li = button_to t('navigation.log_out'), destroy_user_session_path,
+                    class: 'dropdown-item px-2 text-black', method: :delete

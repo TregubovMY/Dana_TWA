@@ -1,2 +1,43 @@
 en:
-  hello: "Hello world"
+  dana: Dana
+  en: English
+  ru: Russian
+  activerecord:
+    attributes:
+        user:
+          created_at: Created at
+          email: Email
+          username: Username
+          role: Role
+          password: Password
+          current_password: Current password
+          password_confirmation: Password confirmation
+          updated_at: Updated at
+          remember_me: Remember me
+  navigation:
+    reports: Reports
+    users: Users
+    products: Products
+    orders: Orders
+    mailing: Mailing
+    log_out: Logout
+    user_profile: User profile
+  global:
+    title_filter: Filter
+    user:
+      roles:
+        user: User
+        moderator: Moderator
+        admin: Admin
+    button:
+      delete: Delete
+      edit: Edit
+      update: Update
+      back: Back
+      restore: Restore
+      show: Show
+      submit: Submit
+      take_book: Take book
+      return_book: Return book
+      filter: Filter
+      close: Close
