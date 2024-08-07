@@ -10,18 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_21_145230) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_07_055744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: ""
     t.string "username", default: "", null: false
+    t.string "telegram_chat_id", default: "", null: false
+    t.string "telegram_username", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.decimal "deposit", default: "0.0", null: false
+    t.boolean "approve", default: false
+    t.datetime "deleted_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
+    t.index ["telegram_chat_id"], name: "index_users_on_telegram_chat_id", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "users_roles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "role_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_users_roles_on_deleted_at"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
+  add_foreign_key "users_roles", "roles"
+  add_foreign_key "users_roles", "users"
 end
