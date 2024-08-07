@@ -44,6 +44,9 @@ module DanaTwa
 
     config.generators do |g|
       g.template_engine :slim
+      g.jbuilder false
+      g.decorator false
+      g.helper false
     end
   end
 end
