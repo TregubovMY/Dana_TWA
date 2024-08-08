@@ -1,0 +1,30 @@
+= form_with(model: order) do |form|
+  - if order.errors.any?
+    div style="color: red"
+      h2 = "#{pluralize(order.errors.count, "error")} prohibited this order from being saved:"
+      ul
+        - order.errors.each do |error|
+          li = error.full_message
+
+  div
+    = form.label :state, style: "display: block"
+    = form.number_field :state
+
+  div
+    = form.label :product_id, style: "display: block"
+    = form.text_field :product_id
+
+  div
+    = form.label :user_id, style: "display: block"
+    = form.text_field :user_id
+
+  div
+    = form.label :cancelable_until, style: "display: block"
+    = form.datetime_field :cancelable_until
+
+  div
+    = form.label :deleted_at, style: "display: block"
+    = form.datetime_field :deleted_at
+
+  div
+    = form.submit

@@ -1,0 +1,16 @@
+div id="#{dom_id order}"
+  p
+    strong State:
+    =< order.state
+  p
+    strong Product:
+    =< order.product_id
+  p
+    strong User:
+    =< order.user_id
+  p
+    strong Cancelable until:
+    =< order.cancelable_until
+  p
+    strong Deleted at:
+    =< order.deleted_at

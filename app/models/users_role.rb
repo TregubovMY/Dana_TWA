@@ -1,6 +1,6 @@
 class UsersRole < ApplicationRecord
-  belongs_to :user
-  belongs_to :role
-
   acts_as_paranoid
+
+  belongs_to :user, -> { with_deleted }, inverse_of: :roles
+  belongs_to :role, -> { with_deleted }, inverse_of: :users
 end

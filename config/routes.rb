@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :payments
+  resources :orders
   scope "(:locale)", locale: /#{I18n.available_locales.join('|')}/ do
     devise_for :users, controllers: {
       registrations: "users/registrations",
