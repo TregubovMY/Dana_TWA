@@ -5,15 +5,33 @@ ru:
   activerecord:
     attributes:
       user:
-        created_at: Создана
-        email: Почта
-        username: Имя
-        role: Роль
-        current_password: Текущий пароль
+        email: Email
+        username: Имя пользователя
+        telegram_chat_id: ID чата Telegram
+        telegram_username: Имя пользователя Telegram
         password: Пароль
+        current_password: Текущий пароль
         password_confirmation: Подтверждение пароля
-        updated_at: Обновлено
-        remember_me: Запомнить меня
+        deposit: Депозит
+        approve: Подтвержден
+      category:
+        name: Название
+      order:
+        state: Статус
+        product: Товар
+        user: Пользователь
+        cancelable_until: Окончание возможности отмены
+      payment:
+        state: Статус
+        amount: Сумма
+        order: Заказ
+      product:
+        name: Название
+        price: Цена
+        quantity: Количество
+        category: Категория
+      role:
+        name: Название
   navigation:
     reports: Отчеты
     users: Пользователи
@@ -23,7 +41,6 @@ ru:
     log_out: Выйти
     user_profile: Профиль пользователя
   global:
-    remember_me: Запомнить меня
     title_filter: Фильтр
     user:
       roles:
@@ -42,3 +59,10 @@ ru:
       update: Обновить
       back: Назад
       close: Закрыть
+  views:
+    pagination:
+      first: "&laquo; Первая"
+      last: "Последняя &raquo;"
+      previous: "&lsaquo; Предыдущая"
+      next: "Следующая &rsaquo;"
+      truncate: "&хеллип;"
