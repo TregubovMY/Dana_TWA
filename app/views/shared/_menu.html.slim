@@ -2,13 +2,13 @@
   h3.mt-5.mb-5.text-white = t('dana')
   ul.nav.nav-pills.flex-column
     li.nav-item
-      = link_to t('navigation.reports'), '#', class: 'nav-link'
+      = link_to t('navigation.reports'), '/', class: 'nav-link'
     li.nav-item
-      = link_to t('navigation.users'), '#', class: 'nav-link'
+      = link_to t('navigation.users'), users_path, class: 'nav-link'
     li.nav-item
-      = link_to t('navigation.products'), '#', class: 'nav-link'
+      = link_to t('navigation.products'), products_path, class: 'nav-link'
     li.nav-item
-      = link_to t('navigation.orders'), '#', class: 'nav-link'
+      = link_to t('navigation.orders'), orders_path, class: 'nav-link'
     li.nav-item
       = link_to t('navigation.mailing'), '#', class: 'nav-link'
   .user-info.mt-auto.mb-5

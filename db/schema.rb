@@ -37,8 +37,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_08_090450) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "state"
-    t.decimal "amount"
+    t.integer "state", default: 0, null: false
+    t.decimal "amount", null: false
     t.bigint "order_id", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false

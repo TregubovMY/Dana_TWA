@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   acts_as_paranoid
 
-  has_one :users_role, dependent: :destroy
+  has_one :users_role, -> { with_deleted }, dependent: :destroy, inverse_of: :user
   has_one :role, through: :users_role
   has_many :orders, dependent: :destroy
   has_many :payments, dependent: :destroy

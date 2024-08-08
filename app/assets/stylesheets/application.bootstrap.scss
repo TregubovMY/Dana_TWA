@@ -12,7 +12,7 @@
 
 .nav-link:hover,
 .nav-link:focus {
-  color: #0dcaf0; /* Светло-серый цвет при наведении */
+  color: #0dcaf0;
 }
 
 .flag {
@@ -25,14 +25,6 @@
   text-align: left;
 }
 
-.ru-flag {
-  background-position: -1px -0px;
-
-}
-.en-flag {
-  background-position: -1px -17px;
-}
-
 .nav {
   .flag {
     position: relative;
@@ -43,4 +35,9 @@
 .alert-notice {
   color: #0c5460;
   background-color: #d1ecf1;
+}
+
+.alert-alert {
+  color: #da515f;
+  background-color: #f8d7da;
 }
