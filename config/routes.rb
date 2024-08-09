@@ -14,4 +14,6 @@ Rails.application.routes.draw do
     # Defines the root path route ("/")
     root to: 'products#index'
   end
+
+  telegram_webhook TelegramWebhooksController
 end

@@ -18,4 +18,14 @@ class User < ApplicationRecord
   def email_required?
     false
   end
+
+  def approve!
+    update!(approve: true)
+  end
+
+  def self.create_user_telegram(telegram_username:, telegram_chat_id:)
+    user = new(telegram_username:, telegram_chat_id:, username: telegram_username)
+    user.password = Devise.friendly_token
+    user.save!
+  end
 end

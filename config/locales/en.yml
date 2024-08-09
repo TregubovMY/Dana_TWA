@@ -66,3 +66,11 @@ en:
       previous: "&lsaquo; Prev"
       next: "Next &rsaquo;"
       truncate: "&hellip;"
+  telegram:
+    messages:
+      already_approved: 'You are already approved'
+      greeting: "@%{username}, hello👋\nWe have sent a connection request to our office manager. While you wait for a connection notification, you can have a cup of coffee☕️"
+      approved: 'You are approved'
+      not_approved: 'You are not approved'
+    web_app:
+      button_text: 'Open Web App'
