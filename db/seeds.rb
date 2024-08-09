@@ -40,6 +40,9 @@ if Rails.env.development?
   manager_role_create = UsersRole.where(user_id: manager.id, role_id: manager_role.id).first_or_initialize
   manager_role_create.save!
 
+  user_role_create = UsersRole.where(user_id: user.id, role_id: user_role.id).first_or_initialize
+  user_role_create.save!
+
   category1 = Category.where(name: 'category1').first_or_initialize
   category1.save!
   category2 = Category.where(name: 'category2').first_or_initialize

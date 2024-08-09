@@ -1,0 +1,18 @@
+= render 'shared/filter', path: users_path if current_page?(users_path)
+
+table.table.table-striped.table-hover.mt-5
+  thead
+    th scope="col" Id
+    th scope="col" Пользователь
+    th scope="col" Чат Id
+    th scope="col" Дата подключения
+  tbody
+    - @users.each do |user|
+      tr
+        th scope="row" =< user.id
+        td = link_to highlight(user.decorate.name_with_sign, params[:search_query]), user_path(user)
+        td = user.telegram_chat_id
+        td = user.created_at.to_date
+
+.d-flex.justify-content-center.mt-3
+  = paginate @users

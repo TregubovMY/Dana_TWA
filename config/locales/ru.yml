@@ -49,16 +49,21 @@ ru:
         admin: Админ
     button:
       delete: Удалить
-      edit: Изменить
+      edit: Редактировать
       show: Показать
       submit: Отправить
       restore: Восстановить
+      save: Сохранить
       take_book: Взять книгу
       return_book: Вернуть книгу
       filter: Фильтровать
       update: Обновить
       back: Назад
       close: Закрыть
+      really_delete: Удалить полностью
+      payed: Оплачено
+    dialog:
+      you_sure: Вы уверены?
   views:
     pagination:
       first: "&laquo; Первая"

@@ -55,10 +55,15 @@ en:
       restore: Restore
       show: Show
       submit: Submit
+      save: Save
       take_book: Take book
       return_book: Return book
       filter: Filter
       close: Close
+      really_delete: Really delete
+      payed: Payed
+    dialog:
+      you_sure: Are you sure?
   views:
     pagination:
       first: "&laquo; First"

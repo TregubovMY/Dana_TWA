@@ -1,6 +1,16 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
+mark, .mark {
+  padding: 0 !important;
+  color: red;
+}
+
 .sidebar {
   padding-left: 40px;
   a {

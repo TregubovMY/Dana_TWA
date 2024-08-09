@@ -5,9 +5,8 @@ html
     meta name="viewport" content="width=device-width,initial-scale=1"
     == csrf_meta_tags
     == csp_meta_tag
-    == stylesheet_link_tag "application", "data-turbo-track": "reload"
-    == javascript_include_tag "application", "data-turbo-track": "reload", defer: true, type: "module"
-    == javascript_include_tag 'https://telegram.org/js/telegram-web-app.js'
+    == stylesheet_link_tag "application"
+    == javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
   body
     .container-fluid.d-flex.min-vh-100
       .row.flex-grow-1.bg-light.bg-gradient
@@ -15,10 +14,10 @@ html
           .col-2.d-flex.flex-column.bg-dark.bg-gradient
             = render 'shared/menu'
 
-          .content.col-10.p-4.mt-4
+          .content.col-10.px-5.mt-4
             = render partial: 'shared/flash'
             = yield
         - else
-          .content.p-4
+          .content.px-5
             = render partial: 'shared/flash'
             = yield

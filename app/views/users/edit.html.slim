@@ -1,1 +1,53 @@
-h1 Editing user
+= link_to t('global.button.back'), user_path(@user), class: 'btn btn-secondary mb-2'
+
+h2 = t('.edit_profile')
+
+= render 'shared/errors', object: @user
+
+= form_with model: @user do |f|
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :username
+
+    .col-sm-10
+      = f.text_field :username, class: 'form-control form-control-lg'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :deposit
+
+    .col-sm-10
+      = f.text_field :deposit, class: 'form-control form-control-lg'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :approve
+
+    .col-sm-10
+      = f.select :approve, [["approve", true], ["unapproved", false]] , { selected: @user.approve },
+              class: 'form-select form-select-lg'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :role_id
+
+    .col-sm-10
+      = f.collection_select :role_id, Role.all, :id, :name, { selected: @user.role.id },
+              class: 'form-select form-select-lg'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :password
+
+    .col-sm-10
+      = f.password_field :password, class: 'form-control form-control-lg'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :password_confirmation
+
+    .col-sm-10
+      = f.password_field :password_confirmation,
+              class: 'form-control form-control-lg'
+
+  = f.submit t('global.button.save'), class: 'btn btn-primary'
