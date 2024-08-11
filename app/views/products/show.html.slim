@@ -31,3 +31,5 @@
 
           = link_to t('global.button.delete'), product_path(@product), class: 'btn btn-danger mb-1',
                     data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+
+  = image_tag(@product.image, style: 'width: 300px; height: auto') if @product.image.present?

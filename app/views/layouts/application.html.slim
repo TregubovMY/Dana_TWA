@@ -6,8 +6,12 @@ html
     == csrf_meta_tags
     == csp_meta_tag
     == stylesheet_link_tag "application"
+    / script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"
+    / link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css
     == stylesheet_link_tag "https://unpkg.com/slim-select@latest/dist/slimselect.css"
+    == stylesheet_link_tag "https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css"
     == javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+    == javascript_include_tag "https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"
   body
     = turbo_frame_tag :modal
 
