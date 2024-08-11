@@ -4,8 +4,14 @@
 
 import { application } from "./application"
 
+import DebounceController from "./debounce_controller"
+application.register("debounce", DebounceController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import DebounceController from "debounce_controller.js"
-application.register("debounce", DebounceController)
+import SelectController from "./select_controller"
+application.register("select", SelectController)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)

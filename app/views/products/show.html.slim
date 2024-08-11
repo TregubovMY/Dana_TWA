@@ -26,7 +26,8 @@
           = link_to t('global.button.really_delete'), really_destroy_product_path(@product), class: 'btn btn-primary',
                   data: { turbo_method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
         - else
-          = link_to t('global.button.edit'), edit_product_path(@product), class: 'btn btn-primary mb-1',
-                  data: { turbo_stream: true }
+          = link_to t('global.button.edit'), edit_product_path(@product),
+                  data: { turbo_frame: 'modal', turbo_stream: true }, class: 'btn btn-primary mb-1'
+
           = link_to t('global.button.delete'), product_path(@product), class: 'btn btn-danger mb-1',
                     data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }

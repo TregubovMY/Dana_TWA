@@ -22,6 +22,12 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.save
         format.html { redirect_to categories_url, notice: "Category was successfully created." }
+        format.turbo_stream do
+          render turbo_stream: [
+              turbo_stream.remove(:modal),
+              turbo_stream.prepend('flash', partial: 'shared/flash')
+            ]
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
       end

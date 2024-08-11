@@ -30,6 +30,7 @@ ru:
         price: Цена
         quantity: Количество
         category: Категория
+        category_id: Категория
       role:
         name: Название
   navigation:

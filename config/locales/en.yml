@@ -30,6 +30,7 @@ en:
         price: Price
         quantity: Quantity
         category: Category
+        category_id: Category
       role:
         name: Name
   navigation:

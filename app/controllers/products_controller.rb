@@ -25,21 +25,21 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('products',
-                                                  template: 'products/edit', locals: { product: @product })
-      end
-    end
   end
 
   def create
     @product = Product.new(product_params)
 
     respond_to do |format|
+      flash.now[:success] = "Product was successfully created."
       if @product.save
         format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
+        format.turbo_stream do
+          render turbo_stream: [
+              turbo_stream.remove(:modal),
+              turbo_stream.prepend('flash', partial: 'shared/flash')
+            ]
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -51,8 +51,11 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('products',
-                                                    template: 'products/show', locals: { product: @product })
+          render turbo_stream: [
+            turbo_stream.remove(:modal),
+            turbo_stream.prepend('flash', partial: 'shared/flash'),
+            turbo_stream.replace('products', template: 'products/show', locals: { product: @product })
+          ]
         end
       else
         format.html { render :edit, status: :unprocessable_entity }

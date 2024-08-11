@@ -1,4 +1,5 @@
-= turbo_frame_tag 'products' do
-  h1 Editing product
+= turbo_frame_tag :modal do
+  .modal-pop-app
+    h1 Editing product
 
-  == render "form", product: @product
+    == render "form", product: @product

@@ -6,8 +6,11 @@ html
     == csrf_meta_tags
     == csp_meta_tag
     == stylesheet_link_tag "application"
+    == stylesheet_link_tag "https://unpkg.com/slim-select@latest/dist/slimselect.css"
     == javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
   body
+    = turbo_frame_tag :modal
+
     .container-fluid.d-flex.min-vh-100
       .row.flex-grow-1.bg-light.bg-gradient
         - if current_user

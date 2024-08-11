@@ -1,6 +1,6 @@
 = turbo_frame_tag 'products' do
   = link_to 'Добавить категорию', new_category_path, class: 'btn btn-primary',
-          data: { turbo_frame: '_top' }
+          data: { turbo_frame: 'modal' }
 
   table.table.table-striped.table-hover.mt-5
     thead

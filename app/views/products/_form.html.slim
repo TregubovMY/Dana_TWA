@@ -14,7 +14,8 @@
         = f.label :category_id
 
       .col-sm-10
-        = f.select :category_id, Category.pluck(:name, :id), {}, class: 'form-select form-select-lg'
+        = f.select :category_id, Category.pluck(:name, :id), {class: 'form-select form-select-lg'},
+                { data: { controller: 'select' } }
 
     .mb-3.row
       .col-sm-2.col-form-label
@@ -31,3 +32,6 @@
         = f.text_field :quantity, class: 'form-control form-control-lg'
 
     = f.submit t('global.button.save'), class: 'btn btn-primary'
+
+    = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
+            class: 'btn btn-danger'
