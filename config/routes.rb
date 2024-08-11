@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :products
 
-    resources :users do
+    resources :users, except: %i[new create] do
       member do
         patch :restore
         delete :really_destroy

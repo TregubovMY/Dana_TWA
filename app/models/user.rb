@@ -19,6 +19,8 @@ class User < ApplicationRecord
   scope :approved, -> { where(approve: true) }
   scope :unapproved, -> { where(approve: false) }
 
+  broadcasts_to ->(_user) { "users" }, inserts_by: :prepend
+
   def email_required?
     false
   end

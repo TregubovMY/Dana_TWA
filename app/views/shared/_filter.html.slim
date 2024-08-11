@@ -1,5 +1,5 @@
 = form_with url: path, method: :get, local: true,
-        data: { controller: 'debounce', debounce_target: 'form' } do |f|
+        data: { controller: 'debounce', debounce_target: 'form', turbo_stream: true } do |f|
   .row
     .form-group
       = f.search_field :search_query, value: params[:search_query], placeholder: 'Поиск',

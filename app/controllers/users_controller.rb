@@ -5,10 +5,24 @@ class UsersController < ApplicationController
 
   def index
     @users = User.filter_by_name(params[:search_query]).approved.includes(:role).page(params[:page])
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('users',
+                                                  template: 'users/users', locals: { users: @users })
+      end
+    end
   end
 
   def requests
     @users = User.unapproved.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('users',
+                                                  template: 'users/requests', locals: { users: @users })
+      end
+    end
   end
 
   def archive
@@ -16,25 +30,20 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { render 'index' }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('users',
+                                                  template: 'users/users', locals: { users: @users })
+      end
     end
   end
 
   def show; end
 
-  def new
-    @user = User.new
-  end
-
-  def edit; end
-
-  def create
-    @user = User.new(user_params)
-
+  def edit
     respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('users', template: 'users/edit', locals: { user: @user })
       end
     end
   end
@@ -45,6 +54,10 @@ class UsersController < ApplicationController
         update_user_role
         if update_user_attributes
           format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace('users',
+                                                      template: 'users/show', locals: { user: @user })
+          end
         else
           format.html { render :edit, status: :unprocessable_entity }
         end
@@ -56,6 +69,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.destroy
         format.html { redirect_to user_url(@user), notice: "User was successfully destroyed." }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('users',
+                                                    template: 'users/show', locals: { user: @user })
+        end
       else
         format.html { render :show }
       end
@@ -66,6 +83,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.restore
         format.html { redirect_to user_url(@user), notice: "User was successfully restored." }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('users',
+                                                    template: 'users/show', locals: { user: @user })
+        end
       else
         format.html { render :show }
       end

@@ -2,10 +2,14 @@ h1.mb-3 Users
 
 ul.nav.nav-tabs.mb-4
   li.nav-item
-    = active_link_to 'Активные', users_path, class: 'nav-link link-dark'
+    = link_to 'Активные', users_path, class: 'nav-link link-dark',
+            data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
   li.nav-item
-    = active_link_to 'Запросы на подключение', requests_users_path, class: 'nav-link link-dark'
+    = link_to 'Запросы на подключение', requests_users_path, class: 'nav-link link-dark',
+            data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
   li.nav-item
-    = active_link_to 'Архив', archive_users_path, class: 'nav-link link-dark'
+    = link_to 'Архив', archive_users_path, class: 'nav-link link-dark',
+            data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
 
-= render template: 'users/users'
+= turbo_frame_tag 'users' do
+  = render template: 'users/users'
