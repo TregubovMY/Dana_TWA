@@ -1,10 +1,7 @@
-div id="#{dom_id product}"
-  p
-    strong Name:
-    =< product.name
-  p
-    strong Price:
-    =< product.price
-  p
-    strong Quantity:
-    =< product.quantity
+tr
+  td = product.id
+  td = link_to product.name, product_path(product), data: { turbo_frame: '_top' }
+  td = product.category.name
+  td = product.price
+  td = product.quantity
+  td = product.created_at.to_date

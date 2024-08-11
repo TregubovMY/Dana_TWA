@@ -1,11 +1,15 @@
-p style="color: green" = notice
+= turbo_frame_tag 'products' do
+  = link_to 'Добавить категорию', new_category_path, class: 'btn btn-primary',
+          data: { turbo_frame: '_top' }
 
-h1 Categories
+  table.table.table-striped.table-hover.mt-5
+    thead
+      th scope="col" Id
+      th scope="col" Название
+      th scope="col" Дата создания
+      th scope="col"
+    tbody
+      = render @categories
 
-#categories
-  - @categories.each do |category|
-    == render category
-    p
-      = link_to "Show this category", category
-
-= link_to "New category", new_category_path
+  .d-flex.justify-content-center.mt-3
+    = paginate @categories

@@ -1,10 +1,32 @@
-p style="color: green" = notice
+= turbo_frame_tag 'products' do
+  = link_to t('global.button.back'), products_path, class: 'btn btn-secondary mb-2', data: { turbo_frame: '_top' }
 
-== render @product
+  h1.mb-4
+    = @product.name
+  .row
+    .col-md-8
+      .user-info
+        - product_data = {"Цена:" => @product.price,
+                          "Количество:" => @product.quantity,
+                          "Категория:" => @product.category.name,
+                          "Дата создания:" => @product.created_at.to_date}
 
-div
-  => link_to "Edit this product", edit_product_path(@product)
-  '|
-  =< link_to "Back to products", products_path
+        - product_data.each do |label, value|
+          .row.mb-2
+            .col-6
+              span = label
+            .col-6.text-right
+              = value
 
-  = button_to "Destroy this product", @product, method: :delete
+    .col-md-4.d-flex.justify-content-center
+      .user-actions.d-flex.flex-column.w-auto
+        - if @product.deleted_at
+          = link_to t('global.button.restore'), restore_product_path(@product),
+                  data: { turbo_method: :patch }, class: 'btn btn-primary mb-1'
+          = link_to t('global.button.really_delete'), really_destroy_product_path(@product), class: 'btn btn-primary',
+                  data: { turbo_method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
+        - else
+          = link_to t('global.button.edit'), edit_product_path(@product), class: 'btn btn-primary mb-1',
+                  data: { turbo_stream: true }
+          = link_to t('global.button.delete'), product_path(@product), class: 'btn btn-danger mb-1',
+                    data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }

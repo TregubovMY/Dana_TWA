@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   end
 
   def archive
-    @users = User.only_deleted.page(params[:page])
+    @users = User.only_deleted.includes(:role).page(params[:page])
 
     respond_to do |format|
       format.html { render 'index' }

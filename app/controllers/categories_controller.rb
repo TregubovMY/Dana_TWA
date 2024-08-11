@@ -1,16 +1,19 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_category, only: %i[edit update destroy]
+  before_action :set_category, only: %i[destroy]
 
   def index
-    @categories = Category.all
+    @categories = Category.all.page(params[:page])
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('products', template: 'categories/index', locals: { categories: @categories })
+      end
+    end
   end
 
   def new
     @category = Category.new
-  end
-
-  def edit
   end
 
   def create
@@ -18,7 +21,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to category_url(@category), notice: "Category was successfully created." }
+        format.html { redirect_to categories_url, notice: "Category was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

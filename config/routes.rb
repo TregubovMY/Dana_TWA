@@ -6,8 +6,16 @@ Rails.application.routes.draw do
     }
 
     resources :orders
-    resources :categories
-    resources :products
+    resources :categories, except: %i[show edit update]
+    resources :products do
+      collection do
+        get :archive
+      end
+      member do
+        patch :restore
+        delete :really_destroy
+      end
+    end
 
     resources :users, except: %i[new create] do
       member do

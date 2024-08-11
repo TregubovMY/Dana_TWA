@@ -1,22 +1,33 @@
-= form_with(model: product) do |form|
-  - if product.errors.any?
-    div style="color: red"
-      h2 = "#{pluralize(product.errors.count, "error")} prohibited this product from being saved:"
-      ul
-        - product.errors.each do |error|
-          li = error.full_message
+= turbo_frame_tag 'products' do
+  = render 'shared/errors', object: @product
 
-  div
-    = form.label :name, style: "display: block"
-    = form.text_field :name
+  = form_with model: @product do |f|
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :name
 
-  div
-    = form.label :price, style: "display: block"
-    = form.text_field :price
+      .col-sm-10
+        = f.text_field :name, class: 'form-control form-control-lg'
 
-  div
-    = form.label :quantity, style: "display: block"
-    = form.number_field :quantity
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :category_id
 
-  div
-    = form.submit
+      .col-sm-10
+        = f.select :category_id, Category.pluck(:name, :id), {}, class: 'form-select form-select-lg'
+
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :price
+
+      .col-sm-10
+        = f.text_field :price, class: 'form-control form-control-lg'
+
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :quantity
+
+      .col-sm-10
+        = f.text_field :quantity, class: 'form-control form-control-lg'
+
+    = f.submit t('global.button.save'), class: 'btn btn-primary'
