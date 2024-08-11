@@ -1,16 +1,8 @@
-div id="#{dom_id order}"
-  p
-    strong State:
-    =< order.state
-  p
-    strong Product:
-    =< order.product_id
-  p
-    strong User:
-    =< order.user_id
-  p
-    strong Cancelable until:
-    =< order.cancelable_until
-  p
-    strong Deleted at:
-    =< order.deleted_at
+tr
+  td = order.id
+  td = order.state
+  td = link_to order.product.name, order_path(order.product), data: { turbo_frame: '_top' }
+  td = order.user.decorate.name_with_sign
+  td = order.product.price
+  td = order.created_at.to_date
+

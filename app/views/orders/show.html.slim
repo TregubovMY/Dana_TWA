@@ -1,10 +1,26 @@
-p style="color: green" = notice
+= turbo_frame_tag 'orders' do
+  = link_to t('global.button.back'), orders_path, class: 'btn btn-secondary mb-2', data: { turbo_frame: '_top' }
 
-== render @order
+  h1.mb-4
+    = @order.product.name
+  .row
+    .col-md-8
+      .user-info
+        - order_data = {"Оплачено в системе:" => @order.state,
+                          "Стоимость:" => @order.product.price,
+                          "Пользователь:" => @order.user.decorate.name_with_sign,
+                          "Дата создания:" => @order.created_at.to_date}
 
-div
-  => link_to "Edit this order", edit_order_path(@order)
-  '|
-  =< link_to "Back to orders", orders_path
+        - order_data.each do |label, value|
+          .row.mb-2
+            .col-6
+              span = label
+            .col-6.text-right
+              = value
 
-  = button_to "Destroy this order", @order, method: :delete
+    .col-md-4.d-flex.justify-content-center
+      .user-actions.d-flex.flex-column.w-auto
+        - unless @order.deleted_at
+          = link_to t('global.button.payed'), '#', class: 'btn btn-primary mb-1'
+          = link_to t('global.button.delete'), order_path(@order), class: 'btn btn-danger mb-1',
+                    data: { turbo_method: :delete, turbo_confirm: t('global.dialog.you_sure') }

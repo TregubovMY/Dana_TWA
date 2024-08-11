@@ -5,7 +5,11 @@ Rails.application.routes.draw do
       sessions: "users/sessions"
     }
 
-    resources :orders
+    resources :orders, except: %i[edit update] do
+      collection do
+        get :archive
+      end
+    end
     resources :categories, except: %i[show edit update]
     resources :products do
       collection do
