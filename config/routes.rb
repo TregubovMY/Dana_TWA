@@ -41,9 +41,14 @@ Rails.application.routes.draw do
       end
     end
 
-    # Defines the root path route ("/")
-    root to: 'reports#index'
-  end
+    resources :store, only: [:index], controller: 'telegram/store'
 
-  telegram_webhook TelegramWebhooksController
+    # Маршруты для аутентификации через Telegram
+    resource :telegram_session, only: [:new, :create], controller: 'telegram/sessions'
+
+    telegram_webhook Telegram::TelegramWebhooksController
+
+    # Defines the root path route ("/")
+    root to: 'telegram/sessions#new'
+  end
 end
