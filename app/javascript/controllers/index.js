@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import DaterangePickerController from "./daterange_picker_controller"
+application.register("daterange-picker", DaterangePickerController)
+
 import DebounceController from "./debounce_controller"
 application.register("debounce", DebounceController)
 

@@ -1,0 +1,17 @@
+= turbo_frame_tag 'reports' do
+  = render 'filter', path: reports_path
+
+  table.table.table-striped.table-hover.mt-5
+    thead
+      th scope="col" Пользователь
+      th scope="col" Депозит
+      th scope="col" Стоимость
+      th scope="col" Количество
+      th scope="col" Оплачено
+      - if current_page?(users_reports_path)
+        th scope="col"
+    tbody
+      = render partial: 'reports/user_report', collection: @reports
+
+  .d-flex.justify-content-center.mt-3
+    = paginate @reports

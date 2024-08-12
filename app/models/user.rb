@@ -16,6 +16,7 @@ class User < ApplicationRecord
   validates :deposit, numericality: { greater_than_or_equal_to: 0 }
 
   scope :filter_by_name, ->(name) { where('username ILIKE :query', query: "%#{name}%") }
+  scope :filter_by_date, ->(start_date, end_date) { where(orders: { created_at: start_date..end_date }) }
   scope :approved, -> { where(approve: true) }
   scope :unapproved, -> { where(approve: false) }
 

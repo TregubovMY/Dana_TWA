@@ -5,6 +5,12 @@ Rails.application.routes.draw do
       sessions: "users/sessions"
     }
 
+    resources :reports, only: %i[index] do
+      collection do
+        get :users, to: "reports#users_reports", as: 'users'
+      end
+    end
+
     resources :orders, except: %i[edit update] do
       collection do
         get :archive
@@ -36,7 +42,7 @@ Rails.application.routes.draw do
     end
 
     # Defines the root path route ("/")
-    root to: 'products#index'
+    root to: 'reports#index'
   end
 
   telegram_webhook TelegramWebhooksController

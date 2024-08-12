@@ -1,0 +1,23 @@
+= form_with url: path, method: :get, local: true, data: { controller: 'debounce', debounce_target: 'form', turbo_stream: true } do |f|
+  .row
+    .col-md-6
+      .mb-3
+        = f.search_field :user, value: params[:user], class: 'form-control form-control-lg', placeholder: 'Пользователь'
+    .col-md-6
+      .mb-3
+        = f.text_field :start_date_between, value: params[:start_date_between],
+                data: { controller: "daterange-picker" }, class: 'form-control form-control-lg'
+  .row
+    .col-md-6
+      .mb-3
+        = f.select :state, Payment.states, { include_blank: true, selected: params[:state],
+                class: 'form-select form-select-lg', prompt: 'Статус' },
+                { data: { controller: 'select' } }
+    - unless current_page?(users_reports_path)
+      .col-md-6
+        .mb-3
+          = f.select :product, Product.pluck(:name, :id), { include_blank: true, selected: params[:product],
+                  class: 'form-select form-select-lg', prompt: 'Продукт' },
+                  { data: { controller: 'select' } }
+
+  = f.submit t('global.button.submit'), class: 'btn btn-primary'

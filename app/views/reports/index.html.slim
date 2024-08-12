@@ -1,0 +1,30 @@
+== javascript_include_tag "https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.js"
+
+h1.mb-3 Отчеты
+
+ul.nav.nav-tabs.mb-4
+  li.nav-item
+    = link_to 'Общий отчет', reports_path, class: 'nav-link link-dark',
+            data: { turbo_frame: 'reports', toggle: :tab, turbo_stream: true }
+  li.nav-item
+    = link_to 'Отчет по пользователям', users_reports_path, class: 'nav-link link-dark',
+            data: { turbo_frame: 'reports', toggle: :tab, turbo_stream: true }
+
+
+= turbo_frame_tag 'reports' do
+  = render 'filter', path: reports_path
+
+  table.table.table-striped.table-hover.mt-5
+    thead
+      th scope="col" Пользователь
+      th scope="col" Продукт
+      th scope="col" Стоимость
+      th scope="col" Количество
+      th scope="col" Оплачено
+      - if current_page?(users_reports_path)
+        th scope="col"
+    tbody
+      = render partial: 'reports/report', collection: @reports
+
+  .d-flex.justify-content-center.mt-3
+    = paginate @reports
