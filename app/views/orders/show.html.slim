@@ -6,10 +6,11 @@
   .row
     .col-md-8
       .user-info
-        - order_data = {"Оплачено в системе:" => @order.state,
-                          "Стоимость:" => @order.product.price,
-                          "Пользователь:" => @order.user.decorate.name_with_sign,
-                          "Дата создания:" => @order.created_at.to_date}
+        - scope = 'orders.index'
+        - order_data = { t('.paid_in_system', scope: scope) => @order.state,
+                          t('.cost', scope: scope) => @order.product.price,
+                          t('.user', scope: scope) => @order.user.decorate.name_with_sign,
+                          t('.created_at', scope: scope) => l(@order.created_at, format: :medium) }
 
         - order_data.each do |label, value|
           .row.mb-2

@@ -3,11 +3,11 @@
 
   table.table.table-striped.table-hover.mt-5
     thead
-      th scope="col" Пользователь
-      th scope="col" Депозит
-      th scope="col" Стоимость
-      th scope="col" Количество
-      th scope="col" Оплачено
+      th scope="col" = t('reports.filter.user')
+      th scope="col" = t('reports.filter.deposit')
+      th scope="col" = t('reports.filter.cost')
+      th scope="col" = t('reports.filter.quantity')
+      th scope="col" = t('reports.filter.paid')
       - if current_page?(users_reports_path)
         th scope="col"
     tbody

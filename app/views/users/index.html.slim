@@ -1,14 +1,14 @@
-h1.mb-3 Users
+h1.mb-3 = t('navigation.users')
 
 ul.nav.nav-tabs.mb-4
   li.nav-item
-    = link_to 'Активные', users_path, class: 'nav-link link-dark',
+    = link_to t('.active'), users_path, class: 'nav-link link-dark',
             data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
   li.nav-item
-    = link_to 'Запросы на подключение', requests_users_path, class: 'nav-link link-dark',
+    = link_to t('.users_requests'), requests_users_path, class: 'nav-link link-dark',
             data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
   li.nav-item
-    = link_to 'Архив', archive_users_path, class: 'nav-link link-dark',
+    = link_to t('.archive'), archive_users_path, class: 'nav-link link-dark',
             data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
 
 = turbo_frame_tag 'users' do

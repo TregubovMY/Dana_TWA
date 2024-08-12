@@ -5,6 +5,7 @@ ru:
   activerecord:
     attributes:
       user:
+        id: ID
         email: Email
         username: Имя пользователя
         telegram_chat_id: ID чата Telegram
@@ -12,25 +13,30 @@ ru:
         password: Пароль
         current_password: Текущий пароль
         password_confirmation: Подтверждение пароля
-        deposit: Депозит
+        deposit: Долг
         approve: Подтвержден
+        created_at: Дата создания
       category:
         name: Название
+        created_at: Дата создания
       order:
         state: Статус
         product: Товар
         user: Пользователь
         cancelable_until: Окончание возможности отмены
+        created_at: Дата создания
       payment:
         state: Статус
         amount: Сумма
         order: Заказ
+        created_at: Дата создания
       product:
         name: Название
         price: Цена
         quantity: Количество
         category: Категория
         category_id: Категория
+        created_at: Дата создания
       role:
         name: Название
   navigation:
@@ -67,11 +73,11 @@ ru:
       you_sure: Вы уверены?
   views:
     pagination:
-      first: "&laquo; Первая"
-      last: "Последняя &raquo;"
-      previous: "&lsaquo; Предыдущая"
-      next: "Следующая &rsaquo;"
-      truncate: "&хеллип;"
+      first: "« Первая"
+      last: "Последняя »"
+      previous: "‹ Предыдущая"
+      next: "Следующая ›"
+      truncate: "…"
   telegram:
     messages:
       already_approved: 'Вы уже подтверждены'
@@ -80,3 +86,101 @@ ru:
       not_approved: 'Вы не подтверждены'
     web_app:
       button_text: 'Открыть веб-приложение'
+  users:
+    index:
+      active: Активные
+      users_requests: Запросы на подключение
+      archive: Архив
+    update:
+      success_updated: Пользователь успешно обновлен.
+    edit:
+      edit_profile: Редактировать профиль
+    requests:
+      connect_all_users: Подключить всех пользователей
+      delete_all_users: Удалить всех пользователей
+      connect: Подключить
+    destroy:
+      success: Пользователь успешно удален.
+    restore:
+      success: Пользователь успешно восстановлен.
+    really_destroy:
+      success: Пользователь успешно удален.
+    approve:
+      success: Пользователь успешно подтвержден.
+    approve_all:
+      success: Все пользователи успешно подтверждены.
+      no_users: Нет неподтвержденных пользователей.
+    delete_all:
+      success: Все пользователи успешно удалены.
+      no_users: Нет неподтвержденных пользователей для удаления.
+  products:
+      index:
+        active: Активные
+        categories: Категории
+        deleted: Удаленные
+        add_product: Добавить продукт
+      new:
+        new_product: Новый продукт
+      edit:
+        editing_product: Редактирование продукта
+      show:
+        price: Цена
+        quantity: Количество
+        category: Категория
+        created_at: Дата создания
+      create:
+        success: Продукт успешно создан.
+      update:
+        success: Продукт успешно обновлен.
+      destroy:
+        success: Продукт успешно удален.
+      restore:
+        success: Продукт успешно восстановлен.
+      really_destroy:
+        success: Продукт успешно удален.
+  orders:
+    index:
+      all_orders: Вcе заказы
+      deleted: Удаленные
+      create_order: Создать заказ
+      paid_in_system: Оплачено в системе
+      cost: Стоимость
+      user: Пользователь
+      created_at: Дата создания
+    new:
+      new_order: Новый заказ
+    create:
+      success: "Заказ успешно создан."
+    destroy:
+      success: "Заказ успешно удален."
+  reports:
+    index:
+      general_report: Общий отчет
+      user_report: Отчет по пользователям
+    user_report:
+      fully_paid: Оплачено полностью
+      enter_transfer_manually: Ввести перевод вручную
+    filter:
+      user: Пользователь
+      product: Продукт
+      cost: Стоимость
+      quantity: Количество
+      paid: Оплачено
+      date: Дата
+      status: Статус
+      deposit: Депозит
+  categories:
+    index:
+      add_category: Добавить категорию
+      created_at: Дата создания
+    new:
+      new_category: Новая категория
+    create:
+      success: "Категория успешно создана."
+    update:
+      success: "Категория успешно обновлена."
+    destroy:
+      success: "Категория успешно удалена."
+  time:
+    formats:
+      medium: "%-d %B %H:%M"

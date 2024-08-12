@@ -4,4 +4,4 @@ tr
   td = product.category.name
   td = product.price
   td = product.quantity
-  td = product.created_at.to_date
+  td = l(product.created_at, format: :medium)

@@ -6,12 +6,13 @@
   .row
     .col-md-8
       .user-info
-        - user_data = { "Имя пользователя:" => @user.username,
-                        "Ник в ТГ:" => @user.telegram_username,
-                        "Чат ID:" => @user.telegram_chat_id,
-                        "Долг:" => @user.deposit,
-                        "Депозит:" => @user.deposit,
-                        "Роль:" => @user.role.name }
+        - scope = 'activerecord.attributes.user'
+        - user_data = { t('username', scope: scope) => @user.username,
+                        t('.telegram_username', scope: scope) => @user.telegram_username,
+                        t('.chat_id', scope: scope) => @user.telegram_chat_id,
+                        t('.debt', scope: scope) => @user.deposit,
+                        t('.deposit', scope: scope) => @user.deposit,
+                        t('.role', scope: scope) => @user.role.name }
 
         - user_data.each do |label, value|
           .row.mb-2

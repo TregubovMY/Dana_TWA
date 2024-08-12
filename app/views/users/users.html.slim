@@ -2,12 +2,13 @@
 
   = render 'shared/filter', path: users_path if current_page?(users_path)
 
+  - scope = 'activerecord.attributes.user'
   table.table.table-striped.table-hover.mt-5
     thead
-      th scope="col" Id
-      th scope="col" Пользователь
-      th scope="col" Чат Id
-      th scope="col" Дата подключения
+      th scope="col" = t('id', scope: scope)
+      th scope="col" = t('username', scope: scope)
+      th scope="col" = t('telegram_chat_id', scope: scope)
+      th scope="col" = t('created_at', scope: scope)
     tbody
       - @users.each do |user|
         tr
@@ -15,7 +16,7 @@
           td = link_to highlight(user.decorate.name_with_sign, params[:search_query]),
                   user_path(user), data: { turbo_frame: '_top' }
           td = user.telegram_chat_id
-          td = user.created_at.to_date
+          td = l(user.created_at, format: :medium)
 
   .d-flex.justify-content-center.mt-3
     = paginate @users

@@ -30,8 +30,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        flash.now[:success] = "Order was successfully created."
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+        flash.now[:success] = t('.success')
+        format.html { redirect_to order_url(@order), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.remove(:modal),
@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id]).includes(:product, :user)
 
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
+      format.html { redirect_to orders_url, notice: t('.success') }
     end
   end
 

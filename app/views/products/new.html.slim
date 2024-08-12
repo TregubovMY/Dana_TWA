@@ -1,5 +1,5 @@
 = turbo_frame_tag :modal do
   .modal-pop-app
-    h1 New product
+    h1 = t('.new_product')
 
     == render "form", product: @product

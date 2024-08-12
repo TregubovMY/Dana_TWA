@@ -5,6 +5,7 @@ en:
   activerecord:
     attributes:
       user:
+        id: Id
         email: Email
         username: Username
         telegram_chat_id: Telegram Chat ID
@@ -12,15 +13,17 @@ en:
         password: Password
         current_password: Current Password
         password_confirmation: Password Confirmation
-        deposit: Deposit
+        deposit: Debt
         approve: Approved
+        created_at: Created At
       category:
         name: Name
+        created_at: Created At
       order:
         state: State
         product: Product
         user: User
-        cancelable_until: Cancellable Until
+        cancelable_until: Cancelable Until
       payment:
         state: State
         amount: Amount
@@ -39,7 +42,7 @@ en:
     products: Products
     orders: Orders
     mailing: Mailing
-    log_out: Logout
+    log_out: Log out
     user_profile: User profile
   global:
     title_filter: Filter
@@ -51,32 +54,130 @@ en:
     button:
       delete: Delete
       edit: Edit
-      update: Update
-      back: Back
-      restore: Restore
       show: Show
       submit: Submit
+      restore: Restore
       save: Save
-      take_book: Take book
-      return_book: Return book
+      take_book: Take Book
+      return_book: Return Book
       filter: Filter
+      update: Update
+      back: Back
       close: Close
-      really_delete: Really delete
+      really_delete: Really Delete
       payed: Payed
     dialog:
       you_sure: Are you sure?
   views:
     pagination:
-      first: "&laquo; First"
-      last: "Last &raquo;"
-      previous: "&lsaquo; Prev"
-      next: "Next &rsaquo;"
-      truncate: "&hellip;"
+      first: "« First"
+      last: "Last »"
+      previous: "‹ Previous"
+      next: "Next ›"
+      truncate: "…"
   telegram:
     messages:
-      already_approved: 'You are already approved'
-      greeting: "@%{username}, hello👋\nWe have sent a connection request to our office manager. While you wait for a connection notification, you can have a cup of coffee☕️"
-      approved: 'You are approved'
-      not_approved: 'You are not approved'
+      already_approved: You are already approved
+      greeting: "@%{username}, hello👋\nWe have sent a connection request to our office manager. While you are waiting for a connection notification, you can have a cup of coffee☕️"
+      approved: You are approved
+      not_approved: You are not approved
     web_app:
-      button_text: 'Open Web App'
+      button_text: Open Web App
+  users:
+    index:
+      active: Active
+      users_requests: Connection requests
+      archive: Archive
+    update:
+      success_updated: User was successfully updated.
+    edit:
+      edit_profile: Edit Profile
+    requests:
+      connect_all_users: Approve all users
+      delete_all_users: Delete all users
+      connect: Approve
+    destroy:
+      success: User was successfully destroyed.
+    restore:
+      success: User was successfully restored.
+    really_destroy:
+      success: User was successfully deleted.
+    approve:
+      success: User was successfully approved.
+    approve_all:
+      success: All users were successfully approved.
+      no_users: There are no unapproved users.
+    delete_all:
+      success: All users were successfully deleted.
+      no_users: There are no unapproved users to delete.
+  products:
+    index:
+      active: Active
+      categories: Categories
+      deleted: Deleted
+      add_product: Add Product
+    new:
+      new_product: New Product
+    edit:
+      editing_product: Editing Product
+    show:
+      price: Price
+      quantity: Quantity
+      category: Category
+      created_at: Created at
+    create:
+      success: Product was successfully created.
+    update:
+      success: Product was successfully updated.
+    destroy:
+      success: Product was successfully destroyed.
+    restore:
+      success: Product was successfully restored.
+    really_destroy:
+      success: Product was successfully deleted.
+  orders:
+    index:
+      all_orders: All Orders
+      deleted: Deleted
+      create_order: Create Order
+      paid_in_system: Paid in System
+      cost: Cost
+      user: User
+      created_at: Created At
+    new:
+      new_order: New Order
+    create:
+      success: "Order was successfully created."
+    destroy:
+      success: "Order was successfully destroyed."
+  reports:
+    index:
+      general_report: General Report
+      user_report: User Report
+    user_report:
+      fully_paid: Fully Paid
+      enter_transfer_manually: Enter Transfer Manually
+    filter:
+      user: User
+      product: Product
+      cost: Cost
+      quantity: Quantity
+      paid: Paid
+      date: Date
+      status: Status
+      deposit: Deposit
+  categories:
+    index:
+      add_category: Add Category
+      created_at: Created At
+    new:
+      new_category: New Category
+    create:
+      success: "Category was successfully created."
+    update:
+      success: "Category was successfully updated."
+    destroy:
+      success: "Category was successfully destroyed."
+  time:
+    formats:
+      medium: "%-d %B %H:%M"

@@ -53,7 +53,7 @@ class UsersController < ApplicationController
       ActiveRecord::Base.transaction do
         update_user_role
         if update_user_attributes
-          format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+          format.html { redirect_to user_url(@user), notice: t('.success_updated') }
           format.turbo_stream do
             render turbo_stream: turbo_stream.replace('users',
                                                       template: 'users/show', locals: { user: @user })
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   def destroy
     respond_to do |format|
       if @user.destroy
-        format.html { redirect_to user_url(@user), notice: "User was successfully destroyed." }
+        format.html { redirect_to user_url(@user), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('users',
                                                     template: 'users/show', locals: { user: @user })
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
   def restore
     respond_to do |format|
       if @user.restore
-        format.html { redirect_to user_url(@user), notice: "User was successfully restored." }
+        format.html { redirect_to user_url(@user), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('users',
                                                     template: 'users/show', locals: { user: @user })
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
   def really_destroy
     respond_to do |format|
       if @user.really_destroy!
-        format.html { redirect_to users_url, notice: "User was successfully deleted." }
+        format.html { redirect_to users_url, notice: t('.success') }
       else
         format.html { render :show }
       end
@@ -106,7 +106,7 @@ class UsersController < ApplicationController
   def approve
     respond_to do |format|
       if @user.approve!
-        format.html { redirect_to approve_user_url, notice: "User was successfully approve." }
+        format.html { redirect_to approve_user_url, notice: t('.success') }
       else
         format.html { render :index }
       end
@@ -115,17 +115,17 @@ class UsersController < ApplicationController
 
   def approve_all
     if User.unapproved.update_all(approve: true)
-      redirect_to requests_users_path, notice: "All users were successfully approved."
+      redirect_to requests_users_path, notice: t('.success')
     else
-      redirect_to requests_users_path, notice: "There are no unapproved users."
+      redirect_to requests_users_path, notice: t('.no_users')
     end
   end
 
   def delete_all
     if User.unapproved.destroy_all
-      redirect_to requests_users_path, notice: "All users were successfully deleted."
+      redirect_to requests_users_path, notice: t('.success')
     else
-      redirect_to requests_users_path, notice: "There are no unapproved users to delete."
+      redirect_to requests_users_path, notice: t('.no_users')
     end
   end
 

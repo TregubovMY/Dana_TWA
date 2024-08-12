@@ -6,10 +6,10 @@
   .row
     .col-md-8
       .user-info
-        - product_data = {"Цена:" => @product.price,
-                          "Количество:" => @product.quantity,
-                          "Категория:" => @product.category.name,
-                          "Дата создания:" => @product.created_at.to_date}
+        - product_data = { t('.price') => @product.price,
+                          t('.quantity') => @product.quantity,
+                          t('.category') => @product.category.name,
+                          t('.created_at') => l(@product.created_at, format: :medium) }
 
         - product_data.each do |label, value|
           .row.mb-2

@@ -32,8 +32,8 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        flash.now[:success] = "Product was successfully created."
-        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
+        flash.now[:success] = t('.success')
+        format.html { redirect_to product_url(@product), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.remove(:modal),
@@ -49,7 +49,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
+        format.html { redirect_to product_url(@product), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.remove(:modal),
@@ -67,14 +67,14 @@ class ProductsController < ApplicationController
     @product.destroy!
 
     respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_url, notice: t('.success') }
     end
   end
 
   def restore
     respond_to do |format|
       if @product.restore
-        format.html { redirect_to product_path(@product), notice: "Product was successfully restored." }
+        format.html { redirect_to product_path(@product), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('products',
                                                     template: 'products/show', locals: { product: @product })
@@ -88,7 +88,7 @@ class ProductsController < ApplicationController
   def really_destroy
     respond_to do |format|
       if @product.really_destroy!
-        format.html { redirect_to products_url, notice: "Product was successfully deleted." }
+        format.html { redirect_to products_url, notice: t('.success') }
       else
         format.html { render :show }
       end

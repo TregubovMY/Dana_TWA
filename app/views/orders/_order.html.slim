@@ -4,5 +4,5 @@ tr
   td = link_to order.product.name, order_path(order.product), data: { turbo_frame: '_top' }
   td = order.user.decorate.name_with_sign
   td = order.product.price
-  td = order.created_at.to_date
+  td = l(order.created_at, format: :medium)
 

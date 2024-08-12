@@ -1,12 +1,12 @@
 = turbo_frame_tag 'products' do
-  = link_to 'Добавить категорию', new_category_path, class: 'btn btn-primary',
+  = link_to t('categories.index.add_category'), new_category_path, class: 'btn btn-primary',
           data: { turbo_frame: 'modal' }
 
   table.table.table-striped.table-hover.mt-5
     thead
-      th scope="col" Id
-      th scope="col" Название
-      th scope="col" Дата создания
+      th scope="col" = t('.id')
+      th scope="col" = t('activerecord.attributes.category.name')
+      th scope="col" = t('activerecord.attributes.category.created_at')
       th scope="col"
     tbody
       = render @categories
