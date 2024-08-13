@@ -20,10 +20,15 @@ ul.nav.nav-tabs.mb-4
       th scope="col" = t('reports.filter.cost')
       th scope="col" = t('reports.filter.quantity')
       th scope="col" = t('reports.filter.paid')
-      - if current_page?(users_reports_path)
-        th scope="col"
     tbody
-      = render partial: 'reports/report', collection: @reports
+      = render partial: 'reports/order', collection: @orders
+    tfoot
+      tr.table-active
+        td.colspan-2 Итого
+        td
+        td = @summarize_orders_price
+        td = @orders.count
+        td
 
   .d-flex.justify-content-center.mt-3
-    = paginate @reports
+    = paginate @orders

@@ -157,8 +157,8 @@ ru:
     index:
       general_report: Общий отчет
       user_report: Отчет по пользователям
-    user_report:
-      fully_paid: Оплачено полностью
+    user:
+      fully_paid: Оплатить полностью
       enter_transfer_manually: Ввести перевод вручную
     filter:
       user: Пользователь

@@ -1,16 +1,26 @@
 class ReportsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :merge_date_filter_params
+
   has_scope :filter_by_user, as: :user
-  has_scope :filter_by_date, using: [:date_start, :date_end], as: :date
+  has_scope :filter_by_date, using: %i[date_start date_end], as: :date
   has_scope :filter_by_state, as: :state
   has_scope :filter_by_product, as: :product
 
   def index
-    params.merge! DateFilterService.prepare_date_filter_params(params[:start_date_between])
-    Rails.logger.info params
-    @reports = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page])
+    @orders = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page])
+    @summarize_orders_price = ReportsService.summarize_orders_price(@orders)
   end
 
   def users_reports
-    @reports = apply_scopes(User).approved.includes(:orders, :payments).page(params[:page])
+    @users = apply_scopes(User).approved.includes(:orders, :payments).page(params[:page])
+    @price_orders = ReportsService.summarize_price_orders_users(@users)
+    @count_orders = ReportsService.count_orders(@users)
+  end
+
+  private
+
+  def merge_date_filter_params
+    params.merge! DateFilterService.prepare_date_filter_params(params[:start_date_between])
   end
 end

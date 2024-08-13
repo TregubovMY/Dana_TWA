@@ -10,3 +10,6 @@
         = f.text_field :name, class: 'form-control form-control-lg'
 
     = f.submit t('global.button.save'), class: 'btn btn-primary'
+
+    = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
+          class: 'btn btn-danger'

@@ -20,8 +20,6 @@ class User < ApplicationRecord
   scope :approved, -> { where(approve: true) }
   scope :unapproved, -> { where(approve: false) }
 
-  broadcasts_to ->(_user) { "users" }, inserts_by: :prepend
-
   def email_required?
     false
   end
@@ -40,6 +38,14 @@ class User < ApplicationRecord
 
   def admin_or_manager?
     admin? || manager?
+  end
+
+  def count_orders
+    orders.count
+  end
+
+  def summarize_orders_price
+    orders.sum { |order| order.payment.amount }
   end
 
   def self.create_user_telegram(telegram_username:, telegram_chat_id:)

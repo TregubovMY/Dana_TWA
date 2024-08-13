@@ -32,6 +32,10 @@ Rails.application.routes.draw do
         patch :restore
         delete :really_destroy
         patch :approve
+
+        get 'payment', to: 'user_payments#payment', as: 'payment'
+        post 'payment/deposit_money', to: 'user_payments#deposit_money', as: 'deposit_money'
+        post 'payment/pay_all_orders', to: 'user_payments#pay_all_orders', as: 'pay_all_orders'
       end
       collection do
         get :requests

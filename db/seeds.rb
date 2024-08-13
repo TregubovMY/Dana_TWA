@@ -63,7 +63,7 @@ if Rails.env.development?
   order2.save!
 
   payment1 = Payment.where(order_id: order1.id).first_or_initialize
-  payment1.update!(amount: 90, state: :pending)
+  payment1.update!(amount: 100, state: :pending)
 
   payment2 = Payment.where(order_id: order2.id).first_or_initialize
   payment2.update!(amount: 100, state: :succeeded)

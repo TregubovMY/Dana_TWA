@@ -1,4 +1,5 @@
-= form_with url: path, method: :get, local: true, data: { controller: 'debounce', debounce_target: 'form', turbo_stream: true } do |f|
+= form_with url: path, method: :get, local: true, data: { controller: 'debounce', debounce_target: 'form',
+        turbo_stream: true} do |f|
   .row
     .col-md-6
       .mb-3
@@ -6,7 +7,8 @@
     .col-md-6
       .mb-3
         = f.text_field :start_date_between, value: params[:start_date_between],
-                data: { controller: "daterange-picker" }, class: 'form-control form-control-lg', placeholder: t('.date')
+                data: { controller: "daterange-picker", user_payments_target: 'dateField' },
+                class: 'form-control form-control-lg', placeholder: t('.date')
   .row
     .col-md-6
       .mb-3

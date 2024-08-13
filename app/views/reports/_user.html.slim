@@ -1,0 +1,12 @@
+tr
+  td = user.decorate.name_with_sign
+  td = user.deposit
+  td = user.summarize_orders_price
+  td = user.count_orders
+  td No
+  td
+    .btn-group
+      = link_to t('.fully_paid'), pay_all_orders_user_path(user), class: 'btn btn-primary',
+              data: { turbo: false, action: 'user-payments#submitWithDate' }
+      = link_to t('.enter_transfer_manually'), payment_user_path(user), class: 'btn btn-secondary',
+              data: { turbo_frame: :modal }

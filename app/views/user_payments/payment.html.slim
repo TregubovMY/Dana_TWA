@@ -1,0 +1,15 @@
+= turbo_frame_tag :modal do
+  .modal-pop-app
+    h2 Внести деньги пользователя #{@user.decorate.name_with_sign}
+
+    = form_with url: deposit_money_user_path(@user), method: :post do |f|
+      = render 'shared/errors', object: @user
+
+      .form-floating.mb-3.mt-3
+        = f.number_field 'user[deposit]', step: :any, class: 'form-control form-control-lg'
+        = f.label 'user[deposit]', I18n.t('reports.filter.deposit')
+
+      = f.submit t('global.button.save'), class: 'btn btn-primary'
+
+      = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
+          class: 'btn btn-danger'

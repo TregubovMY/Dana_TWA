@@ -21,3 +21,6 @@ application.register("modal", ModalController)
 
 import SelectController from "./select_controller"
 application.register("select", SelectController)
+
+import UserPaymentsController from "./user_payments_controller"
+application.register("user-payments", UserPaymentsController)

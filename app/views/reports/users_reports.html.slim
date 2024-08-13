@@ -1,17 +1,25 @@
 = turbo_frame_tag 'reports' do
-  = render 'filter', path: reports_path
+  div data-controller="user-payments"
+    = render 'filter', path: reports_path
 
-  table.table.table-striped.table-hover.mt-5
-    thead
-      th scope="col" = t('reports.filter.user')
-      th scope="col" = t('reports.filter.deposit')
-      th scope="col" = t('reports.filter.cost')
-      th scope="col" = t('reports.filter.quantity')
-      th scope="col" = t('reports.filter.paid')
-      - if current_page?(users_reports_path)
+    table.table.table-striped.table-hover.mt-5
+      thead
+        th scope="col" = t('reports.filter.user')
+        th scope="col" = t('reports.filter.deposit')
+        th scope="col" = t('reports.filter.cost')
+        th scope="col" = t('reports.filter.quantity')
+        th scope="col" = t('reports.filter.paid')
         th scope="col"
-    tbody
-      = render partial: 'reports/user_report', collection: @reports
+      tbody
+        = render partial: 'reports/user', collection: @users
+      tfoot
+        tr.table-active
+          td.colspan-2 Итого
+          td
+          td = @price_orders
+          td = @count_orders
+          td
+          td
 
-  .d-flex.justify-content-center.mt-3
-    = paginate @reports
+    .d-flex.justify-content-center.mt-3
+      = paginate @users
