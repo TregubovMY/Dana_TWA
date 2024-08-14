@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     resources :orders, except: %i[edit update] do
       collection do
         get :archive
+        post 'create_for_product/:product_id', to: 'orders#create_for_product', as: :create_for_product
+        delete 'delete_last', to: 'orders#delete_last', as: :delete_last
+        get 'users', to: 'orders#users', as: :users
       end
     end
     resources :categories, except: %i[show edit update]
