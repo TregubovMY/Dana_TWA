@@ -10,7 +10,7 @@
         - order_data = { t('.paid_in_system', scope: scope) => @order.state,
                           t('.cost', scope: scope) => @order.product.price,
                           t('.user', scope: scope) => @order.user.decorate.name_with_sign,
-                          t('.created_at', scope: scope) => l(@order.created_at, format: :medium) }
+                          t('.created_at', scope: scope) => l(@order.created_at, format: :medium)}
 
         - order_data.each do |label, value|
           .row.mb-2
@@ -22,6 +22,7 @@
     .col-md-4.d-flex.justify-content-center
       .user-actions.d-flex.flex-column.w-auto
         - unless @order.deleted_at
-          = link_to t('global.button.payed'), '#', class: 'btn btn-primary mb-1'
+          = link_to t('global.button.payed'), pay_order_user_path(@order), class: 'btn btn-primary mb-1',
+                  data: { turbo_method: :post, turbo_frame: '_top' }
           = link_to t('global.button.delete'), order_path(@order), class: 'btn btn-danger mb-1',
-                    data: { turbo_method: :delete, turbo_confirm: t('global.dialog.you_sure') }
+                    data: { turbo_method: :delete, turbo_confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }

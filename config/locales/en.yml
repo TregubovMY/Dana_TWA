@@ -34,6 +34,17 @@ en:
         quantity: Quantity
         category: Category
         category_id: Category
+      mailing:
+        created_at: Mailing date
+        kind: Mailing type
+        phone: Phone
+        active: Active
+        send_date: Date sending
+        bank: Bank
+        send_time: Send time
+        distribution_to_debtors: Distribution to debtors
+      bank:
+        name: Name
       role:
         name: Name
   navigation:
@@ -44,6 +55,8 @@ en:
     mailing: Mailing
     log_out: Log out
     user_profile: User profile
+    mailing_history: Mailing history
+    mailing_settings: Mailing settings
   global:
     title_filter: Filter
     user:
@@ -178,6 +191,11 @@ en:
       success: "Category was successfully updated."
     destroy:
       success: "Category was successfully destroyed."
+  mailings:
+    settings:
+      title_mailing: Distribution to debtors
+      text_mailing: "Hi\nit's time to pay for orders.\nYour debt for the past month: ... Your total debt: ..."
+    date_sending: First day of every month
   time:
     formats:
       medium: "%-d %B %H:%M"

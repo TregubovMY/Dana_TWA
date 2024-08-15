@@ -1,0 +1,15 @@
+h1 = t('navigation.mailing')
+
+= render 'nav'
+
+- scope = 'activerecord.attributes.mailing'
+table.table.table-striped.table-hover.mt-5
+  thead
+    th scope="col" = t('.id')
+    th scope="col" = t('kind', scope: scope)
+    th scope="col" = t('created_at', scope: scope)
+  tbody
+    = render @mailings
+
+.d-flex.justify-content-center.mt-3
+  / = paginate @mailings

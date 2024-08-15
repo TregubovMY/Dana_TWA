@@ -39,6 +39,17 @@ ru:
         created_at: Дата создания
       role:
         name: Название
+      mailing:
+        created_at: Дата отправки рассылки
+        kind: Тип рассылки
+        phone: Телефон
+        active: Активировать
+        send_date: Дата отправки
+        bank: Банк
+        send_time: Время отправки
+        distribution_to_debtors: Рассылка к должникам
+      bank:
+        name: Название
   navigation:
     reports: Отчеты
     users: Пользователи
@@ -47,6 +58,8 @@ ru:
     mailing: Рассылка
     log_out: Выйти
     user_profile: Профиль пользователя
+    mailing_history: История рассылок
+    mailing_settings: Настройки рассылки
   global:
     title_filter: Фильтр
     user:
@@ -181,6 +194,11 @@ ru:
       success: "Категория успешно обновлена."
     destroy:
       success: "Категория успешно удалена."
+  mailings:
+    settings:
+      title_mailing: Рассылка по должникам
+      text_mailing: "Привет\nПришло время оплатить заказы.\nТвой долг за прошедший месяц: ... Твой общий долг: ..."
+    date_sending: Первое число каждого месяца
   time:
     formats:
       medium: "%-d %B %H:%M"

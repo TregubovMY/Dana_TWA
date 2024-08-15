@@ -1,0 +1,55 @@
+h1 = t('navigation.mailing')
+
+= render 'nav'
+
+h2 = t('.title_mailing')
+
+- scope = 'activerecord.attributes.mailing'
+
+= form_for @setting, url: settings_mailings_path, method: :patch do |f|
+  = render 'shared/errors', object: @setting
+
+  .mb-3.row
+    .col-sm-10
+      .form-check.form-switch
+        = f.check_box :active, class: 'form-check-input', id: 'mySwitch'
+        = f.label :active, t('active', scope: scope), class: 'form-check-label', for: 'mySwitch'
+
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :send_date, t('send_date', scope: scope)
+
+    .col-sm-10
+      = f.text_field :send_date, value: t('mailings.date_sending'), class: 'form-control', disabled: true
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :send_time, t('send_time', scope: scope)
+
+    .col-sm-10
+      = f.text_field :send_time, value: '8:00', class: 'form-control', disabled: true
+
+  .mb-3.row
+    .col-sm-12
+      = f.text_area :text, value: t('.text_mailing'), class: 'form-control', disabled: true, rows: 3
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :phone, t('phone', scope: scope)
+
+    .col-sm-10
+      = f.phone_field :phone, class: 'form-control'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :bank, t('bank', scope: scope)
+
+    .col-sm-10
+      = f.select :bank_id, Bank.pluck(:name, :id), { class: 'form-select form-select-lg' },
+                { data: { controller: 'select' } }
+
+  .mb-3.row
+    = render 'products/image_form', form: f
+
+  = f.submit t('global.button.save'), class: 'btn btn-primary'

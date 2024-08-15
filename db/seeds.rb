@@ -18,6 +18,15 @@ manager_role.save!
 other_category = Category.where(name: 'other').first_or_initialize
 other_category.save!
 
+bank = Bank.where(name: 'Sberbank').first_or_initialize
+bank.save!
+
+mailing_settings = MailingSetting.where(bank_id: bank.id, active: true, phone: '8 911 111 11 11').first_or_initialize
+mailing_settings.save!
+
+mailing = Mailing.where(mailing_setting_id: mailing_settings.id, kind: 0).first_or_initialize
+mailing.save!
+
 if Rails.env.development?
   admin = User.where(username: 'admin').first_or_initialize
   admin.update!(password: '123456', password_confirmation: '123456',

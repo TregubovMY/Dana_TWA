@@ -5,6 +5,13 @@ Rails.application.routes.draw do
       sessions: "users/sessions"
     }
 
+    resources :mailings, only: %i[index] do
+      collection do
+        patch :update_settings, to: "mailings#update_settings", as: 'update_settings'
+        get :settings, to: "mailings#settings", as: 'settings'
+      end
+    end
+
     resources :reports, only: %i[index] do
       collection do
         get :users, to: "reports#users_reports", as: 'users'
@@ -39,6 +46,7 @@ Rails.application.routes.draw do
         get 'payment', to: 'user_payments#payment', as: 'payment'
         post 'payment/deposit_money', to: 'user_payments#deposit_money', as: 'deposit_money'
         post 'payment/pay_all_orders', to: 'user_payments#pay_all_orders', as: 'pay_all_orders'
+        post 'payment/pay_order/:id', to: 'user_payments#pay_order', as: 'pay_order'
       end
       collection do
         get :requests

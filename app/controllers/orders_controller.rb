@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @orders = Order.includes(:product, :user).page(params[:page])
+    @orders = Order.without_deleted.includes(:product, :user).page(params[:page])
   end
 
   def show
@@ -62,10 +62,13 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = Order.find(params[:id]).includes(:product, :user)
-
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: t('.success') }
+    Rails.logger.info "Order: #{params}"
+    @order = Order.find(params[:id])
+    if @order.destroy
+      redirect_to orders_path, notice: t('.success')
+    else
+      flash.now[:error] = t('.error')
+      render :show
     end
   end
 

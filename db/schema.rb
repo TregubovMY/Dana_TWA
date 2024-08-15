@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_11_160610) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_15_111811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_11_160610) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "banks", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_banks_on_deleted_at"
+    t.index ["name"], name: "index_banks_on_name", unique: true
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.datetime "deleted_at"
@@ -49,6 +58,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_11_160610) do
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_categories_on_deleted_at"
     t.index ["name"], name: "index_categories_on_name"
+  end
+
+  create_table "mailing_settings", force: :cascade do |t|
+    t.string "phone", null: false
+    t.bigint "bank_id", null: false
+    t.boolean "active", default: false
+    t.datetime "deleted_at"
+    t.index ["bank_id"], name: "index_mailing_settings_on_bank_id"
+    t.index ["deleted_at"], name: "index_mailing_settings_on_deleted_at"
+  end
+
+  create_table "mailings", force: :cascade do |t|
+    t.bigint "mailing_setting_id", null: false
+    t.integer "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_mailings_on_deleted_at"
+    t.index ["mailing_setting_id"], name: "index_mailings_on_mailing_setting_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -124,6 +152,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_11_160610) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "mailing_settings", "banks"
+  add_foreign_key "mailings", "mailing_settings"
   add_foreign_key "orders", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"

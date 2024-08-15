@@ -1,7 +1,7 @@
 tr
   td = order.id
   td = order.state
-  td = link_to order.product.name, order_path(order.product), data: { turbo_frame: '_top' }
+  td = link_to order.product.name, order_path(order), data: { turbo_frame: '_top' }
   td = order.user.decorate.name_with_sign
   td = order.product.price
   td = l(order.created_at, format: :medium)

@@ -3,7 +3,7 @@ class Product < ApplicationRecord
 
   belongs_to :category
   has_many :orders, dependent: :destroy
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
