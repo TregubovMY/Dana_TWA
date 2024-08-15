@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :find_deleted_user, only: %i[show restore destroy really_destroy]
 
   def index
-    @users = User.filter_by_name(params[:search_query]).approved.includes(:role).page(params[:page])
+    @users = User.filter_by_name(params[:search_query]).approved.includes(:role).page(params[:page]).per(10)
     respond_to do |format|
       format.html
       format.turbo_stream do
@@ -68,6 +68,7 @@ class UsersController < ApplicationController
   def destroy
     respond_to do |format|
       if @user.destroy
+        TelegramService.after_rejection(chat_id: @user.telegram_chat_id)
         format.html { redirect_to user_url(@user), notice: t('.success') }
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('users',
@@ -96,9 +97,9 @@ class UsersController < ApplicationController
   def really_destroy
     respond_to do |format|
       if @user.really_destroy!
-        format.html { redirect_to users_url, notice: t('.success') }
+        format.html { redirect_to archive_users_path, notice: t('.success') }
       else
-        format.html { render :show }
+        format.html { render archive_users_path }
       end
     end
   end
@@ -106,7 +107,8 @@ class UsersController < ApplicationController
   def approve
     respond_to do |format|
       if @user.approve!
-        format.html { redirect_to approve_user_url, notice: t('.success') }
+        TelegramService.after_approve(chat_id: @user.telegram_chat_id)
+        format.html { redirect_to requests_users_path, notice: t('.success') }
       else
         format.html { render :index }
       end
@@ -114,7 +116,9 @@ class UsersController < ApplicationController
   end
 
   def approve_all
-    if User.unapproved.update_all(approve: true)
+    @users = User.approved
+    if @users.update_all(approve: true)
+      @users.each { |user| TelegramService.after_approve(chat_id: user.telegram_chat_id) }
       redirect_to requests_users_path, notice: t('.success')
     else
       redirect_to requests_users_path, notice: t('.no_users')
@@ -122,7 +126,13 @@ class UsersController < ApplicationController
   end
 
   def delete_all
-    if User.unapproved.destroy_all
+    @users = User.unapproved
+    if @users.unapproved.destroy_all
+      @users.each do |user|
+        user.approve = false
+        TelegramService.after_rejection(chat_id: user.telegram_chat_id)
+        TelegramService.hide_web_app_button(chat_id: user.telegram_chat_id)
+      end
       redirect_to requests_users_path, notice: t('.success')
     else
       redirect_to requests_users_path, notice: t('.no_users')

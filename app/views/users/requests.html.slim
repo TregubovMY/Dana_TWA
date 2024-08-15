@@ -5,7 +5,7 @@
     = link_to t('.delete_all_users'), delete_all_users_path, class: 'btn btn-danger',
             data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
 
-  table.table.table-striped.table-hover.mt-5
+  table.table.table-striped.table-hover.mt-2
     thead
       th scope="col" = t('activerecord.attributes.user.id')
       th scope="col" = t('activerecord.attributes.user.username')

@@ -4,11 +4,11 @@ class ProductsController < ApplicationController
   before_action :set_product_with_deleted, only: %i[show restore destroy really_destroy]
 
   def index
-    @products = Product.includes(:category).page(params[:page])
+    @products = Product.includes(:category).page(params[:page]).per(12)
   end
 
   def archive
-    @products = Product.includes(:category).only_deleted.page(params[:page])
+    @products = Product.includes(:category).only_deleted.page(params[:page]).per(14)
     respond_to do |format|
       format.html { render 'index' }
       format.turbo_stream do

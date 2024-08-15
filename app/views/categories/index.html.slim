@@ -2,7 +2,7 @@
   = link_to t('categories.index.add_category'), new_category_path, class: 'btn btn-primary',
           data: { turbo_frame: 'modal' }
 
-  table.table.table-striped.table-hover.mt-5
+  table.table.table-striped.table-hover.mt-2
     thead
       th scope="col" = t('.id')
       th scope="col" = t('activerecord.attributes.category.name')

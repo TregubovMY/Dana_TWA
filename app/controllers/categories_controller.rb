@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: %i[destroy]
 
   def index
-    @categories = Category.all.page(params[:page])
+    @categories = Category.all.page(params[:page]).per(10)
 
     respond_to do |format|
       format.turbo_stream do

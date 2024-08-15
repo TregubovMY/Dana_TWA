@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @orders = Order.without_deleted.includes(:product, :user).page(params[:page])
+    @orders = Order.without_deleted.includes(:product, :user).page(params[:page]).per(12)
   end
 
   def show
@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def archive
-    @orders = Order.only_deleted.includes(:product, :user).page(params[:page])
+    @orders = Order.only_deleted.includes(:product, :user).page(params[:page]).per(14)
 
     respond_to do |format|
       format.html { render 'index' }
@@ -22,9 +22,10 @@ class OrdersController < ApplicationController
   end
 
   def users
-    @orders = current_user.orders.includes(:product)
+    @orders = current_user.orders.includes(:product, :payment)
 
-    # TODO: написать ответ в тг
+    TelegramService.your_orders(user: current_user, orders: @orders)
+    redirect_to store_index_path, notice: "Заказы отправлены сообщением в чат"
   end
 
   def new
@@ -55,6 +56,7 @@ class OrdersController < ApplicationController
     order = current_user.orders.create(product:)
 
     if order.save
+      TelegramService.after_create_order(user: current_user, product: product)
       redirect_to store_index_path, notice: 'Заказ успешно создан'
     else
       redirect_to store_index_path, alert: 'Ошибка при создании заказа'
@@ -73,7 +75,7 @@ class OrdersController < ApplicationController
   end
 
   def delete_last
-    last_order = current_user.orders.last
+    last_order = current_user.orders.filter_by_state(:created).last # TODO: открытые нужно выбрать
 
     Rails.logger.info "Last order: #{last_order.inspect}, time: #{Time.now}, state: #{last_order.cancelled?}"
 
@@ -82,8 +84,11 @@ class OrdersController < ApplicationController
         last_order.update!(state: :cancelled)
         last_order.payment.update!(state: :failed)
       end
+      Rails.logger.info "TelegramService.after_delete_order: #{current_user.inspect}"
+      TelegramService.after_delete_order(user: current_user)
       redirect_to store_index_path, notice: 'Последний заказ отменен'
     else
+      TelegramService.deleted_impossible(user: current_user)
       redirect_to store_index_path, alert: 'Ошибка при отмене заказа'
     end
   end

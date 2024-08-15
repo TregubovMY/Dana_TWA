@@ -14,7 +14,7 @@ ul.nav.nav-tabs.mb-4
           class: 'btn btn-primary' if current_page?(products_path)
 
   - scope = 'activerecord.attributes.product'
-  table.table.table-striped.table-hover.mt-5
+  table.table.table-striped.table-hover.mt-2
     thead
       th scope="col" = t('.id')
       th scope="col" = t('name', scope: scope)

@@ -3,18 +3,18 @@
 
   = form_with model: @order do |f|
     .mb-3.row
-      .col-sm-2.col-form-label
-        = f.label :product_id
+      .col-4.col-form-label
+        = f.label :product_id, t('products.form.product')
 
-      .col-sm-10
+      .col-8
         = f.select :product_id, Product.pluck(:name, :id), { include_blank: true, class: 'form-select form-select-lg' },
                 { data: { controller: 'select' } }
 
     .mb-3.row
-      .col-sm-2.col-form-label
-        = f.label :user_id
+      .col-sm-5.col-form-label
+        = f.label :user_id, t('products.form.user')
 
-      .col-sm-10
+      .col-sm-7
         = f.select :user_id, User.pluck(:username, :id), { include_blank: true, class: 'form-select form-select-lg' },
                 { data: { controller: 'select' } }
 

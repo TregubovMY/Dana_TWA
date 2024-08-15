@@ -8,8 +8,7 @@ module Telegram
       user_id = TelegramAuthenticationService.authenticate_user(params[:init_data])
 
       if user_id
-        # sign_in(User.find_by(telegram_chat_id: user_id))
-        session[:telegram_chat_id] = user_id
+        sign_in(User.find_by(telegram_chat_id: user_id))
         respond_to do |format|
           format.html { redirect_to store_index_path, notice: "Вы успешно вошли через Telegram!" }
           format.json { render json: { redirect_url: store_index_url }, status: :ok }

@@ -90,3 +90,5 @@ gem "cancancan"
 gem "hotwire-rails"
 
 gem "telegram-bot"
+
+gem 'whenever', require: false

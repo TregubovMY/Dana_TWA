@@ -13,7 +13,7 @@ ul.nav.nav-tabs.mb-4
 = turbo_frame_tag 'reports' do
   = render 'filter', path: reports_path
 
-  table.table.table-striped.table-hover.mt-5
+  table.table.table-striped.table-hover.mt-2
     thead
       th scope="col" = t('reports.filter.user')
       th scope="col" = t('reports.filter.product')

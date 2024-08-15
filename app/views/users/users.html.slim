@@ -3,7 +3,7 @@
   = render 'shared/filter', path: users_path if current_page?(users_path)
 
   - scope = 'activerecord.attributes.user'
-  table.table.table-striped.table-hover.mt-5
+  table.table.table-striped.table-hover.mt-2
     thead
       th scope="col" = t('id', scope: scope)
       th scope="col" = t('username', scope: scope)

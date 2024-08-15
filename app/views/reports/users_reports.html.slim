@@ -1,8 +1,8 @@
 = turbo_frame_tag 'reports' do
   div data-controller="user-payments"
-    = render 'filter', path: reports_path
+    = render 'filter', path: users_reports_path
 
-    table.table.table-striped.table-hover.mt-5
+    table.table.table-striped.table-hover.mt-2
       thead
         th scope="col" = t('reports.filter.user')
         th scope="col" = t('reports.filter.deposit')

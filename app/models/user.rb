@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   scope :filter_by_name, ->(name) { where('username ILIKE :query', query: "%#{name}%") }
   scope :filter_by_date, ->(start_date, end_date) { where(orders: { created_at: start_date..end_date }) }
+  scope :filter_by_state, ->(state) { joins(:orders).merge(Order.filter_by_state(state)) }
   scope :approved, -> { where(approve: true) }
   scope :unapproved, -> { where(approve: false) }
 
@@ -45,12 +46,31 @@ class User < ApplicationRecord
   end
 
   def summarize_orders_price
-    orders.sum { |order| order.payment.amount }
+    orders.includes(:payment).sum('payments.amount')
   end
 
+  # def really_destroy_with_dependents
+  #   user_orders = Order.with_deleted.where(user_id: @user.id)
+  #
+  #   ActiveRecord::Base.transaction do
+  #     user_orders.each do |order|
+  #       Payment.with_deleted.find(order.id).really_destroy!
+  #       order.really_destroy!
+  #     end
+  #
+  #     really_destroy!
+  #   end
+  # end
+
   def self.create_user_telegram(telegram_username:, telegram_chat_id:)
-    user = new(telegram_username:, telegram_chat_id:, username: telegram_username)
-    user.password = Devise.friendly_token
-    user.save!
+    role = Role.find_by(name: 'user')
+
+    User.transaction do
+      user = create!(telegram_username:,
+                     telegram_chat_id:,
+                     username: telegram_username,
+                     password: Devise.friendly_token)
+      UsersRole.create!(user:, role:)
+    end
   end
 end
