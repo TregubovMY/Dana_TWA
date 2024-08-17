@@ -1,6 +1,4 @@
 class MailingsController < ApplicationController
-  before_action :authenticate_user!
-
   def index
     @mailings = Mailing.all
   end

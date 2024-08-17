@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :merge_date_filter_params
 
   has_scope :filter_by_user, as: :user
@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
   has_scope :filter_by_product, as: :product
 
   def index
-    @orders = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page]).per(8)
+    @orders = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page]).per(15)
     @summarize_orders_price = ReportsService.summarize_orders_price(@orders)
   end
 

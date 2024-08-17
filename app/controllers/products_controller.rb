@@ -1,5 +1,4 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_product, only: %i[edit update]
   before_action :set_product_with_deleted, only: %i[show restore destroy really_destroy]
 

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_user, only: %i[edit update approve]
   before_action :find_deleted_user, only: %i[show restore destroy really_destroy]
 

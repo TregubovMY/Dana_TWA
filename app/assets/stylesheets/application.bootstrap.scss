@@ -19,12 +19,24 @@ mark, .mark {
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 16.66667%;
+  min-height: 100vh;
   padding-left: 40px;
   a {
     padding: 10px 10px 10px 0;
     font-size: large;
     color: white;
   }
+}
+
+.content-fix{
+  margin-left: 16.66667%;
+  width: calc(100% - 16.66667%);
+  overflow-x: hidden;
 }
 
 .flag {

@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!
-
   def index
     @orders = Order.without_deleted.includes(:product, :user).page(params[:page]).per(12)
   end

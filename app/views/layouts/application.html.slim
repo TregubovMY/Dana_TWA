@@ -16,10 +16,10 @@ html
     .container-fluid.d-flex.min-vh-100
       .row.flex-grow-1.bg-light.bg-gradient
         - if current_user
-          .col-2.d-flex.flex-column.bg-dark.bg-gradient
+          .sidebar.bg-dark.bg-gradient
             = render 'shared/menu'
 
-          .content.col-10.px-5.mt-4
+          .content.content-fix.flex-grow-1.px-5.mt-4
             = render partial: 'shared/flash'
             = yield
         - else

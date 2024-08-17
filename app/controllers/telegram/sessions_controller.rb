@@ -1,5 +1,6 @@
 module Telegram
   class SessionsController < ApplicationController
+    skip_before_action :authenticate_user!, only: %i[new create]
     layout 'application_telegram'
 
     def new; end
