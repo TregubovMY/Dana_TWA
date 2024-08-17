@@ -3,4 +3,4 @@ tr
   td = order.product.name
   td = order.payment.amount
   td = 1
-  td = order.payment.state
+  td = t("activerecord.attributes.payment.#{order.payment.state}")

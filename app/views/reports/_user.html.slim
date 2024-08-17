@@ -3,7 +3,8 @@ tr
   td = user.deposit
   td = user.summarize_orders_price
   td = user.count_orders
-  td No
+  - state = Payment.states.key(params[:state].to_i)
+  td = params[:state] ? t("activerecord.attributes.payment.#{state}") : t("activerecord.attributes.payment.all")
   td
     .btn-group
       = link_to t('.fully_paid'), pay_all_orders_user_path(user), class: 'btn btn-primary',

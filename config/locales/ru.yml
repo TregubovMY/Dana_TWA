@@ -25,11 +25,18 @@ ru:
         user: Пользователь
         cancelable_until: Окончание возможности отмены
         created_at: Дата создания
+        created: Создан
+        completed: Завершен
+        cancelled: Отменен
       payment:
         state: Статус
         amount: Сумма
         order: Заказ
         created_at: Дата создания
+        pending: Ожидается
+        succeeded: Успешно
+        failed: Неудача
+        all: Различные статусы отплаты
       product:
         name: Название
         price: Цена
@@ -84,6 +91,9 @@ ru:
       payed: Оплачено
     dialog:
       you_sure: Вы уверены?
+    image_form:
+      drag_and_drop: Перетащите сюда, чтобы загрузить, или нажмите здесь, чтобы просмотреть
+      size_file: Максимальный размер файла 5 МБ. Разрешенные типы файлов png, jpg.
   views:
     pagination:
       first: "« Первая"

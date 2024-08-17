@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include PaymentsHelper
+
   def active_link_to(text = nil, path = nil, active_classes: '', **options, &)
     path ||= text
 

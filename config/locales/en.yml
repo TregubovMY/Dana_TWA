@@ -81,6 +81,9 @@ en:
       payed: Payed
     dialog:
       you_sure: Are you sure?
+    image_form:
+      drag_and_drop: Drag here to upload or click here to browse
+      size_file: 5 MB file size maximum. Allowed file types png, jpg.
   views:
     pagination:
       first: "« First"

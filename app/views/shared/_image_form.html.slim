@@ -1,5 +1,5 @@
 .dropzone.dropzone-default.dz-clickable data-controller="dropzone" data-dropzone-max-file-size="5" data-dropzone-accepted-files="image/*" data-dropzone-max-files="1" data-upload-multiple="true"
   = form.file_field :image, multiple: false, direct_upload: true, data: { dropzone_target: 'input' }
   .dropzone-msg.dz-message.needsclick
-    h3.dropzone-msg-title Drag here to upload or click here to browse
-    span.dropzone-msg-desc 5 MB file size maximum. Allowed file types png, jpg.
+    h3.dropzone-msg-title = t('global.image_form.drag_and_drop')
+    span.dropzone-msg-desc = t('global.image_form.size_file')

@@ -12,9 +12,9 @@
   .row
     .col-md-6
       .mb-3
-        = f.select :state, Payment.states, { include_blank: true, selected: params[:state],
-                class: 'form-select form-select-lg', prompt: t('.status') },
-                { data: { controller: 'select' } }
+        = f.select :state, payment_states,
+          { include_blank: true, selected: params[:state], class: 'form-select form-select-lg', prompt: t('.status') },
+          { data: { controller: 'select' } }
     - unless current_page?(users_reports_path)
       .col-md-6
         .mb-3
