@@ -13,13 +13,13 @@
     .col-md-6
       .mb-3
         = f.select :state, payment_states,
-          { include_blank: true, selected: params[:state], class: 'form-select form-select-lg', prompt: t('.status') },
+          { include_blank: t('.all_status'), selected: params[:state], class: 'form-select form-select-lg'},
           { data: { controller: 'select' } }
     - unless current_page?(users_reports_path)
       .col-md-6
         .mb-3
-          = f.select :product, Product.pluck(:name, :id), { include_blank: true, selected: params[:product],
-                  class: 'form-select form-select-lg', prompt: t('.product') },
+          = f.select :product, Product.pluck(:name, :id), { include_blank: t('.all_product'), selected: params[:product],
+                  class: 'form-select form-select-lg' },
                   { data: { controller: 'select' } }
 
   = f.submit t('global.button.filter'), class: 'btn btn-primary'

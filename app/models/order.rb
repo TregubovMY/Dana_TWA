@@ -11,7 +11,7 @@ class Order < ApplicationRecord
   after_create :create_payment
   after_create :change_product_quantity # TODO: дичь нужно делать в контроллере
 
-  scope :filter_by_user, ->(name) { joins(:user).merge(User.filter_by_name(name)) }
+  scope :filter_by_username, ->(name) { joins(:user).merge(User.filter_by_username(name)) }
   scope :filter_by_date, ->(start_date, end_date) { where(created_at: start_date..end_date) }
   scope :filter_by_state, ->(state) { joins(:payment).where(state:) }
   scope :filter_by_product, ->(product_id) { where(product_id:) }

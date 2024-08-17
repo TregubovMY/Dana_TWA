@@ -15,7 +15,7 @@ class User < ApplicationRecord
   validates :telegram_chat_id, presence: true, uniqueness: true
   validates :deposit, numericality: { greater_than_or_equal_to: 0 }
 
-  scope :filter_by_name, ->(name) { where('username ILIKE :query', query: "%#{name}%") }
+  scope :filter_by_username, ->(name) { where('username ILIKE :query', query: "%#{name}%") }
   scope :filter_by_date, ->(start_date, end_date) { where(orders: { created_at: start_date..end_date }) }
   scope :filter_by_state, ->(state) { joins(:orders).merge(Order.filter_by_state(state)) }
   scope :approved, -> { where(approve: true) }
@@ -48,6 +48,7 @@ class User < ApplicationRecord
   def summarize_orders_price
     orders.includes(:payment).sum('payments.amount')
   end
+
 
   # def really_destroy_with_dependents
   #   user_orders = Order.with_deleted.where(user_id: @user.id)

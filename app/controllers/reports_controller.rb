@@ -1,8 +1,8 @@
 class ReportsController < ApplicationController
-  # before_action :authenticate_user!
+  authorize_resource class: false
   before_action :merge_date_filter_params
 
-  has_scope :filter_by_user, as: :user
+  has_scope :filter_by_username, as: :user
   has_scope :filter_by_date, using: %i[date_start date_end], as: :date
   has_scope :filter_by_state, as: :state
   has_scope :filter_by_product, as: :product

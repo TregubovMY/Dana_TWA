@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource param_method: :user_params
   before_action :set_user, only: %i[edit update approve]
   before_action :find_deleted_user, only: %i[show restore destroy really_destroy]
 
@@ -149,7 +150,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :approve, :deposit, :password, :password_confirmation, :role_id)
+    # params.require(:user).permit(:username, :approve, :deposit, :password, :password_confirmation, :role_id)
+    params.require(:user).permit(current_ability.permitted_attributes(:update, @user))
   end
 
   def update_user_role

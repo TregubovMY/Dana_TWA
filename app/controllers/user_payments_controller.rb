@@ -1,11 +1,13 @@
-class UserPaymentsController < UsersController
+class UserPaymentsController < ApplicationController
+  authorize_resource class: false
   before_action :set_user, except: [:pay_order]
 
-  has_scope :filter_by_user, as: :user
+  has_scope :filter_by_username, as: :user
   has_scope :filter_by_date, using: %i[date_start date_end], as: :date
 
   def payment; end
 
+  # TODO: Фиксить весь код
   def pay_all_orders
     params.merge! DateFilterService.prepare_date_filter_params(params[:start_date_between])
 
@@ -35,6 +37,7 @@ class UserPaymentsController < UsersController
   private
 
   def set_user
+    # Rails.logger.info("Params: #{params[:id]}")
     @user = User.find(params[:id])
   end
 end

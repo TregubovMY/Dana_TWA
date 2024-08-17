@@ -176,11 +176,13 @@ en:
     filter:
       user: User
       product: Product
+      all_product: All product
       cost: Cost
       quantity: Quantity
       paid: Paid
       date: Date
       status: Status
+      all_status: All status
       deposit: Deposit
   categories:
     index:

@@ -31,5 +31,6 @@
           = link_to t('global.button.edit'), edit_user_path(@user), class: 'btn btn-primary mb-1',
                   data: { turbo_stream: true }
           = link_to t('global.button.payed'), '#', class: 'btn btn-primary mb-1', method: :patch
-          = link_to t('global.button.delete'), user_path(@user), class: 'btn btn-danger mb-1',
-                    data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+          - if can? :delete, User
+            = link_to t('global.button.delete'), user_path(@user), class: 'btn btn-danger mb-1',
+                      data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }

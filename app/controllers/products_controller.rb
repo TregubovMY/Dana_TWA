@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  load_and_authorize_resource param_method: :product_params
   before_action :set_product, only: %i[edit update]
   before_action :set_product_with_deleted, only: %i[show restore destroy really_destroy]
 

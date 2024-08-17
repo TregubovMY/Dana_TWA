@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  load_and_authorize_resource param_method: :category_params
   before_action :set_category, only: %i[destroy]
 
   def index

@@ -200,11 +200,13 @@ ru:
     filter:
       user: Пользователь
       product: Продукт
+      all_product: Все продукты
       cost: Стоимость
       quantity: Количество
       paid: Оплачено
       date: Дата
       status: Статус
+      all_status: Все статусы
       deposit: Депозит
   categories:
     index:

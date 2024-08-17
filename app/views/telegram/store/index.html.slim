@@ -36,6 +36,7 @@
                   = image_tag product.image.variant(:preview), class: "card-img-top card-img-size", alt: product.name
                 - else
                   = image_tag 'food.jpg', class: "card-img-top card-img-size w-auto", style: "max-height: 250px;"
+                  = image_tag 'placeholder.webp', class: "card-img-top card-img-size w-auto", style: "max-height: 250px;"
                 .card-body
                   h6.modified-card-title.text-white = product.name
                   p.modified-card-price #{product.price}₽

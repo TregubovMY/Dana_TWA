@@ -1,4 +1,6 @@
 class MailingsController < ApplicationController
+  load_and_authorize_resource param_method: :mailing_params
+
   def index
     @mailings = Mailing.all
   end

@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  load_and_authorize_resource param_method: :order_params
+
   def index
     @orders = Order.without_deleted.includes(:product, :user).page(params[:page]).per(12)
   end
