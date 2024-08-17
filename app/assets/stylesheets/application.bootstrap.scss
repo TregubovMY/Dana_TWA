@@ -2,9 +2,14 @@
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import url('https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.css');
 @import 'loading';
+@import 'store';
 
 a {
+  color: #000000;
   text-decoration: none;
+}
+
+body {
   color: black;
 }
 
@@ -20,11 +25,6 @@ mark, .mark {
     font-size: large;
     color: white;
   }
-}
-
-.nav-link:hover,
-.nav-link:focus {
-  color: #0dcaf0;
 }
 
 .flag {

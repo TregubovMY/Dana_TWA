@@ -1,0 +1,126 @@
+body {
+  color: white;
+  background: black;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.modified-card {
+  border-radius: 8px;
+  background: #272626;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+  justify-content: space-between;
+}
+
+.card-img-size {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.category-title {
+  font-size: 1.45rem;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2781a;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.modified-card-title {
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.modified-card-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 15px 0;
+  color: #e2781a;
+  text-align: center;
+}
+
+.btn-store {
+  background-color: #e2781a;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  margin: 10px auto;
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn-store:hover {
+  background-color: #cf6600;
+  transform: translateY(-3px);
+}
+
+.btn-store:active {
+  background-color: #b35700;
+  transform: translateY(0);
+}
+
+.dropdown-store .dropdown-menu-store {
+  background-color: #e2781a;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-store {
+  padding-top: 10px;
+}
+
+.dropdown-store .dropdown-menu-store .dropdown-item-store {
+  color: #fff;
+  font-weight: 500;
+  padding: 10px 15px;
+}
+
+.dropdown-store .dropdown-menu-store .dropdown-item-store:hover {
+  background-color: #b35700;
+}
+
+.nav-tabs .nav-link-store {
+  background-color: #ff932c;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.nav-tabs .nav-link-store:hover {
+  background-color: #b35700;
+}
+
+.nav-tabs .nav-link-store.active {
+  background-color: #b35700;
+}
+
+.category-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+
+.category-scroll .nav {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.category-scroll .nav-item {
+  flex: 0 0 auto;
+  margin-right: 15px;
+}

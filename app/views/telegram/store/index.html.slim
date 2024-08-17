@@ -1,14 +1,10 @@
 .container
   .row
-    .col-12.d-flex.justify-content-between.align-items-center
-      ul.nav.nav-tabs
-        - @products_by_category.each do |category, _|
-          li.nav-item
-            = link_to "##{category.name.parameterize}", class: "nav-link bg-primary text-white" do
-              = category.name
+    .col-12.d-flex.justify-content-between.align-items-center.store-nav
+      a.navbar-brand.fs-1.text-uppercase.text-white href="#" = t('dana')
 
       .dropdown
-        a type="button" data-bs-toggle="dropdown" aria-expanded="false"
+        a.text-white type="button" data-bs-toggle="dropdown" aria-expanded="false"
           i.bi.bi-three-dots-vertical
         ul.dropdown-menu
           li
@@ -17,27 +13,30 @@
           li
             = link_to 'Посмотреть список всех заказов', users_orders_path, class: 'dropdown-item'
 
-  .row
-    .container.mt-3
+  .row.mt-3
+    .container
+      .category-scroll
+        ul.nav
+          - @products_by_category.each do |category, _|
+            li.nav-item
+              = link_to "##{category.name.parameterize}", class: "nav-link text-white text-uppercase" do
+                = category.name
+    .container
       = render partial: 'shared/flash'
 
   .row
     - @products_by_category.each do |category, products|
       .col-12
-        .card.mb-3
-          .card-header
-            h5 id="#{category.name.parameterize}" = category.name.parameterize
-          .card-body
-            .row
-              - products.each do |product|
-                .col-md-4.mb-3.w-auto
-                  .card
-                    - if product.image.present?
-                      = image_tag product.image, class: "card-img-top", alt: product.name
-                    - else
-                      = image_tag 'placeholder.webp', style: 'width: 100px; height: 100px', class: "m-2 card-img-top mx-auto"
-                    .card-body
-                      h6.card-title = product.name
-                      p.card-text
-                        | #{product.price}₽
-                      = button_to 'Заказать', create_for_product_orders_path(product), class: "btn btn-primary"
+        h6.category-title.text-white id="#{category.name.parameterize}" = category.name.parameterize
+        .row
+          - products.each do |product|
+            .col-6.col-sm-6.col-md-4.col-lg-3.mb-3
+              .modified-card
+                - if product.image.present?
+                  = image_tag product.image.variant(:preview), class: "card-img-top card-img-size", alt: product.name
+                - else
+                  = image_tag 'food.jpg', class: "card-img-top card-img-size w-auto", style: "max-height: 250px;"
+                .card-body
+                  h6.modified-card-title.text-white = product.name
+                  p.modified-card-price #{product.price}₽
+                  = button_to 'Заказать', create_for_product_orders_path(product), class: "btn btn-store"
