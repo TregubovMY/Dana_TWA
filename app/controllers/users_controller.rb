@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :find_deleted_user, only: %i[show restore destroy really_destroy]
 
   def index
-    @users = User.filter_by_name(params[:search_query]).approved.includes(:role).page(params[:page]).per(10)
+    @users = User.filter_by_username(params[:search_query]).approved.includes(:role).page(params[:page]).per(10)
     respond_to do |format|
       format.html
       format.turbo_stream do

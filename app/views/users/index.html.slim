@@ -4,9 +4,12 @@ ul.nav.nav-tabs.mb-4
   li.nav-item
     = link_to t('.active'), users_path, class: 'nav-link link-dark',
             data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
-  li.nav-item
-    = link_to t('.users_requests'), requests_users_path, class: 'nav-link link-dark',
-            data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
+  li.nav-item.position-relative
+    = link_to requests_users_path, class: 'nav-link link-dark',
+            data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true } do
+      = t('.users_requests')
+      span.position-absolute.top-10.start-100.translate-middle.badge.rounded-pill.bg-danger style="font-size: 0.7em;"
+        = User.unapproved.count
   li.nav-item
     = link_to t('.archive'), archive_users_path, class: 'nav-link link-dark',
             data: { turbo_frame: 'users', toggle: :tab, turbo_stream: true }
