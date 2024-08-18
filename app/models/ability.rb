@@ -6,10 +6,7 @@ class Ability
   def initialize(user)
     if user.admin?
       can :manage, :all
-      can :update, User, %i[username approve deposit password password_confirmation role_id]
-      cannot :update, User do |target_user|
-        !target_user.admin_or_manager?
-      end
+      can :update, User, %i[username approve deposit role_id password password_confirmation]
     elsif user.manager?
       can :manage, :all
       cannot :delete, User

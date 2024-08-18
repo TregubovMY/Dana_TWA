@@ -56,6 +56,15 @@ class TelegramService
     end
   end
 
+  def self.send_message_managers(text:)
+    role = Role.find_by!(name: 'manager')
+    managers = User.joins(:role).where(roles: { id: role.id })
+
+    managers.find_each do |manager|
+      Telegram.bot.send_message(chat_id: manager.telegram_chat_id, text:)
+    end
+  end
+
   def self.show_web_app_button(chat_id:)
     show_menu = { chat_id:, type: 'web_app', text: 'Menu',
                   web_app: { url: 'https://panther-kind-usually.ngrok-free.app' } }.to_json

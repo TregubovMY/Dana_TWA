@@ -27,7 +27,7 @@
       .col-sm-10
         = f.select :approve, [["approve", true], ["unapproved", false]] , { selected: @user.approve },
                 class: 'form-select form-select-lg'
-    - if true
+    - if can?(:update, @user, :role_id)
       .mb-3.row
         .col-sm-2.col-form-label
           = f.label :role_id
@@ -36,7 +36,7 @@
           = f.collection_select :role_id, Role.all, :id, :name, { selected: @user.role.id },
                   class: 'form-select form-select-lg'
 
-    - if can?(:update, @user, :password)
+    - if can?(:update, @user, :password) && @user.admin_or_manager?
       .mb-3.row
         .col-sm-2.col-form-label
           = f.label :password
