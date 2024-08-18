@@ -4,7 +4,11 @@ class DateFilterService
       starts, ends = start_date_between.split(" - ")
       date_start = Date.strptime(starts, "%m/%d/%Y")
       date_end = Date.strptime(ends, "%m/%d/%Y")
-      { date: { date_start:, date_end: } }
+    else
+      date_start = Date.current.beginning_of_month
+      date_end = Time.current.end_of_month
     end
+
+    { date: { date_start:, date_end: } }
   end
 end

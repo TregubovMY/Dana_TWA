@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
   has_scope :filter_by_product, as: :product
 
   def index
-    @orders = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page]).per(15)
+    @orders = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page]).per(8)
     @summarize_orders_price = ReportsService.summarize_orders_price(@orders)
   end
 
