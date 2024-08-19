@@ -6,8 +6,9 @@
     li.nav-item
       = link_to users_path, class: 'nav-link position-relative d-inline-block' do
         = t('navigation.users')
-        span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger style="font-size: 0.7em;"
-          = User.unapproved.count
+        - if User.unapproved.count > 0
+          span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger style="font-size: 0.7em;"
+            = User.unapproved.count
     li.nav-item
       = link_to t('navigation.products'), products_path, class: 'nav-link'
     li.nav-item

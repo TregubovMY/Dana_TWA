@@ -1,76 +1,36 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+require_relative 'seeds/seeds_helper'
 
-user_role = Role.where(name: 'user').first_or_initialize
-user_role.save!
-admin_role = Role.where(name: 'admin').first_or_initialize
-admin_role.save!
-manager_role = Role.where(name: 'manager').first_or_initialize
-manager_role.save!
+include SeedsHelpers
 
-other_category = Category.where(name: 'other').first_or_initialize
-other_category.save!
+# Роли
+user_role = create_role('user')
+admin_role = create_role('admin')
+manager_role = create_role('manager')
 
-bank = Bank.where(name: 'Sberbank').first_or_initialize
-bank.save!
+# Категории
+other_category = create_category('other')
 
-mailing_settings = MailingSetting.where(bank_id: bank.id, active: true, phone: '8 911 111 11 11').first_or_initialize
-mailing_settings.save!
+# Банк
+bank = create_bank('Sberbank')
+
+# Настройки рассылки
+create_mailing_setting(bank)
 
 if Rails.env.development?
-  admin = User.where(username: 'admin').first_or_initialize
-  admin.update!(password: '123456', password_confirmation: '123456',
-                telegram_chat_id: 'admin_id', telegram_username: 'admin',
-                deposit: 0, approve: true)
+  # Администратор
+  admin = create_user(username: 'admin', password: '123456', role: admin_role,
+                      telegram_chat_id: 'admin_id', telegram_username: 'admin')
 
-  manager = User.where(username: 'manager').first_or_initialize
-  manager.update!(password: '123456', password_confirmation: '123456',
-                  telegram_chat_id: 'manager_id', telegram_username: 'manager',
-                  deposit: 0, approve: true)
+  # Категории и продукты
+  category1 = create_category('Фрукты')
+  category2 = create_category('Сладкое')
 
-  user = User.where(username: 'user').first_or_initialize
-  user.update!(password: '123456', password_confirmation: '123456',
-               telegram_chat_id: 'user_id', telegram_username: 'user',
-               deposit: 0, approve: true)
-
-  admin_role_create = UsersRole.where(user_id: admin.id, role_id: admin_role.id).first_or_initialize
-  admin_role_create.save!
-
-  manager_role_create = UsersRole.where(user_id: manager.id, role_id: manager_role.id).first_or_initialize
-  manager_role_create.save!
-
-  user_role_create = UsersRole.where(user_id: user.id, role_id: user_role.id).first_or_initialize
-  user_role_create.save!
-
-  category1 = Category.where(name: 'category1').first_or_initialize
-  category1.save!
-  category2 = Category.where(name: 'category2').first_or_initialize
-  category2.save!
-
-  product1 = Product.where(name: 'product1').first_or_initialize
-  product1.update!(price: 100, quantity: 10, category_id: category1.id)
-
-  product2 = Product.where(name: 'product2').first_or_initialize
-  product2.update!(price: 100, quantity: 10, category_id: category2.id)
-
-  order1 = Order.where(state: :created, user_id: user.id, product_id: product1.id,
-                       cancelable_until: 1.month.from_now).first_or_initialize
-  order1.save!
-
-  order2 = Order.where(state: :completed, user_id: user.id, product_id: product2.id,
-                       cancelable_until: 1.month.from_now).first_or_initialize
-  order2.save!
-
-  payment1 = Payment.where(order_id: order1.id).first_or_initialize
-  payment1.update!(amount: 100, state: :pending)
-
-  payment2 = Payment.where(order_id: order2.id).first_or_initialize
-  payment2.update!(amount: 100, state: :succeeded)
+  product1 = create_product('Яблоки Гренни', 100, 10, category1)
+  product2 = create_product('Бананы', 100, 10, category1)
+  product3 = create_product('Апельсины', 100, 10, category1)
+  product4 = create_product('Виноград', 100, 10, category1)
+  product5 = create_product('Твикс', 100, 10, category2)
+  product6 = create_product('Баунти', 100, 10, category2)
+  product7 = create_product('Сникерс', 100, 10, category2)
+  product8 = create_product('Мармелад', 100, 10, category2)
 end

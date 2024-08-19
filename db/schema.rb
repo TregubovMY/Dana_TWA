@@ -123,7 +123,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_15_111811) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: ""
     t.string "username", default: "", null: false
     t.string "telegram_chat_id", default: "", null: false
     t.string "telegram_username", default: "", null: false

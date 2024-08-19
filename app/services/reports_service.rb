@@ -21,7 +21,7 @@ class ReportsService
   def self.summarize_price_created_orders_for(user)
     orders_summary = user.orders
                          .joins(:payment)
-                         .where(state: :created)
+                         .where(orders: { state: :created })
                          .select('SUM(payments.amount) AS total_price').take
 
     orders_summary.total_price.to_f

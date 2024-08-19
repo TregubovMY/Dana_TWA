@@ -63,6 +63,6 @@ Rails.application.routes.draw do
     telegram_webhook Telegram::TelegramWebhooksController
 
     # Defines the root path route ("/")
-    root to: 'telegram/sessions#new'
+    root to: 'telegram/store#index'
   end
 end

@@ -13,7 +13,9 @@ module Telegram
     private
 
     def custom_authenticate_user!
-      redirect_to root_path if current_user.blank?
+      redirect_to archive_users_path if current_user.blank?
+
+      render file: Rails.public_path.join('403.html'), status: :forbidden if current_user.approve == false
     end
   end
 end

@@ -1,7 +1,12 @@
 class TelegramService
   def self.after_approve(chat_id:)
     show_web_app_button(chat_id:)
-    Telegram.bot.send_message(chat_id:, text: I18n.t('telegram.messages.approved'))
+    Telegram.bot.send_message(chat_id:, text: I18n.t('telegram.messages.approved'),
+                              reply_markup: {
+                                inline_keyboard: [
+                                  [{ text: 'Открыть сайт', web_app: 'https://panther-kind-usually.ngrok-free.app' }]
+                                ]
+                              })
   end
 
   def self.after_rejection(chat_id:)

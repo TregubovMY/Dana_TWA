@@ -19,6 +19,7 @@ ru:
       category:
         name: Название
         created_at: Дата создания
+        other: прочее
       order:
         state: Статус
         product: Товар

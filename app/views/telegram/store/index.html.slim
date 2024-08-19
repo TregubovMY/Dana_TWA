@@ -21,14 +21,15 @@
           - @products_by_category.each do |category, _|
             li.nav-item
               = link_to "##{category.name.parameterize}", class: "nav-link text-white text-uppercase" do
-                = category.name
+                = t("activerecord.attributes.category.#{category.name}")
     .container
       = render partial: 'shared/flash'
 
   .row
     - @products_by_category.each do |category, products|
       .col-12
-        h6.category-title.text-white id="#{category.name.parameterize}" = category.name.parameterize
+        h6.category-title.text-white id="#{category.name.parameterize}"
+          = t("activerecord.attributes.category.#{category.name}")
         .row
           - products.each do |product|
             .col-6.col-sm-6.col-md-4.col-lg-3.mb-3
