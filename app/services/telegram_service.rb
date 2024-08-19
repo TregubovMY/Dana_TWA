@@ -4,7 +4,7 @@ class TelegramService
     Telegram.bot.send_message(chat_id:, text: I18n.t('telegram.messages.approved'),
                               reply_markup: {
                                 inline_keyboard: [
-                                  [{ text: 'Открыть сайт', web_app: 'https://panther-kind-usually.ngrok-free.app' }]
+                                  [{ text: 'Открыть сайт', web_app: { url: 'https://panther-kind-usually.ngrok-free.app'}}]
                                 ]
                               })
   end
@@ -15,7 +15,7 @@ class TelegramService
   end
 
   def self.after_create_order(user:, product:)
-    total_debt, _ = ReportsService.summarize_price_and_count_orders([user])
+    total_debt, _ = ReportsService.summarize_price_created_orders_for(user)
     Telegram.bot.send_message(chat_id: user.telegram_chat_id,
                               text: I18n.t('telegram.messages.order_created', product_name: product.name,
                                                                               price: product.price,

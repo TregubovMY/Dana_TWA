@@ -1,15 +1,18 @@
-= turbo_frame_tag 'products' do
-  = link_to t('categories.index.add_category'), new_category_path, class: 'btn btn-primary',
-          data: { turbo_frame: 'modal' }
+h1 = t('navigation.categories')
 
-  table.table.table-striped.table-hover.mt-2
-    thead
-      th scope="col" = t('.id')
-      th scope="col" = t('activerecord.attributes.category.name')
-      th scope="col" = t('activerecord.attributes.category.created_at')
-      th scope="col"
-    tbody
-      = render @categories
+= render 'products/nav'
 
-  .d-flex.justify-content-center.mt-3
-    = paginate @categories
+= link_to t('categories.index.add_category'), new_category_path, class: 'btn btn-primary',
+        data: { turbo_frame: 'modal' }
+
+table.table.table-striped.table-hover.mt-2
+  thead
+    th scope="col" = t('.id')
+    th scope="col" = t('activerecord.attributes.category.name')
+    th scope="col" = t('activerecord.attributes.category.created_at')
+    th scope="col"
+  tbody
+    = render @categories
+
+.d-flex.justify-content-center.mt-3
+  = paginate @categories

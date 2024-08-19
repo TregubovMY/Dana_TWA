@@ -1,24 +1,23 @@
-= turbo_frame_tag 'orders' do
-  = render 'shared/errors', object: @order
+= render 'shared/errors', object: @order
 
-  = form_with model: @order do |f|
-    .mb-3.row
-      .col-4.col-form-label
-        = f.label :product_id, t('products.form.product')
+= form_with model: @order do |f|
+  .mb-3.row
+    .col-4.col-form-label
+      = f.label :product_id, t('products.form.product')
 
-      .col-8
-        = f.select :product_id, Product.pluck(:name, :id), { include_blank: true, class: 'form-select form-select-lg' },
-                { data: { controller: 'select' } }
+    .col-8
+      = f.select :product_id, Product.pluck(:name, :id), { include_blank: true, class: 'form-select form-select-lg' },
+              { data: { controller: 'select' } }
 
-    .mb-3.row
-      .col-sm-5.col-form-label
-        = f.label :user_id, t('products.form.user')
+  .mb-3.row
+    .col-sm-5.col-form-label
+      = f.label :user_id, t('products.form.user')
 
-      .col-sm-7
-        = f.select :user_id, User.pluck(:username, :id), { include_blank: true, class: 'form-select form-select-lg' },
-                { data: { controller: 'select' } }
+    .col-sm-7
+      = f.select :user_id, User.pluck(:username, :id), { include_blank: true, class: 'form-select form-select-lg' },
+              { data: { controller: 'select' } }
 
-    = f.submit t('global.button.save'), class: 'btn btn-primary'
+  = f.submit t('global.button.save'), class: 'btn btn-primary'
 
-    = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
-            class: 'btn btn-danger'
+  = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
+          class: 'btn btn-danger'

@@ -64,6 +64,7 @@ ru:
     products: Продукты
     orders: Заказы
     mailing: Рассылка
+    categories: Категории
     log_out: Выйти
     user_profile: Профиль пользователя
     mailing_history: История рассылок
@@ -138,7 +139,7 @@ ru:
     many: заказов
     other: заказов
   users:
-    index:
+    nav:
       active: Активные
       users_requests: Запросы на подключение
       archive: Архив
@@ -165,10 +166,11 @@ ru:
       success: Все пользователи успешно удалены.
       no_users: Нет неподтвержденных пользователей для удаления.
   products:
-      index:
+      nav:
         active: Активные
         categories: Категории
         deleted: Удаленные
+      index:
         add_product: Добавить продукт
       form:
         product: Продукт
@@ -193,9 +195,10 @@ ru:
       really_destroy:
         success: Продукт успешно удален.
   orders:
-    index:
+    nav:
       all_orders: Вcе заказы
       deleted: Удаленные
+    index:
       create_order: Создать заказ
       paid_in_system: Оплачено в системе
       cost: Стоимость
@@ -208,7 +211,7 @@ ru:
     destroy:
       success: "Заказ успешно удален."
   reports:
-    index:
+    nav:
       general_report: Общий отчет
       user_report: Отчет по пользователям
     user_summaries:

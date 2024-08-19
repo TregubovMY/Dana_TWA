@@ -1,6 +1,6 @@
 tr
   td = product.id
-  td = link_to product.name, product_path(product), data: { turbo_frame: '_top' }
+  td = link_to product.name, product_path(product)
   td = product.category.name
   td = product.price
   td = product.quantity

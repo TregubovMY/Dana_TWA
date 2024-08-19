@@ -15,7 +15,7 @@ class Ability
     else
       can :create_for_product, Order
       can :delete_last, Order
-      can :users, Product
+      can :users, Order
     end
   end
 end

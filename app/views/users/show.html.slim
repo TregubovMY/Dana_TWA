@@ -1,36 +1,35 @@
-= turbo_frame_tag 'users' do
-  = link_to t('global.button.back'), users_path, class: 'btn btn-secondary mb-2', data: { turbo_frame: '_top' }
+= link_to t('global.button.back'), users_path, class: 'btn btn-secondary mb-2', data: { turbo_frame: '_top' }
 
-  h1.mb-4
-    = @user.decorate.name_with_sign
-  .row
-    .col-md-8
-      .user-info
-        - scope = 'activerecord.attributes.user'
-        - user_data = { t('username', scope: scope) => @user.username,
-                        t('.telegram_username', scope: scope) => @user.telegram_username,
-                        t('.chat_id', scope: scope) => @user.telegram_chat_id,
-                        t('.debt', scope: scope) => @user.deposit,
-                        t('.deposit', scope: scope) => @user.deposit,
-                        t('.role', scope: scope) => @user.role.name }
+h1.mb-4
+  = @user.decorate.name_with_sign
+.row
+  .col-md-8
+    .user-info
+      - scope = 'activerecord.attributes.user'
+      - user_data = { t('username', scope: scope) => @user.username,
+                      t('.telegram_username', scope: scope) => @user.telegram_username,
+                      t('.chat_id', scope: scope) => @user.telegram_chat_id,
+                      t('.debt', scope: scope) => @user.deposit,
+                      t('.deposit', scope: scope) => @user.deposit,
+                      t('.role', scope: scope) => @user.role.name }
 
-        - user_data.each do |label, value|
-          .row.mb-2
-            .col-6
-              span = label
-            .col-6.text-right
-              = value
+      - user_data.each do |label, value|
+        .row.mb-2
+          .col-6
+            span = label
+          .col-6.text-right
+            = value
 
-    .col-md-4.d-flex.justify-content-center
-      .user-actions.d-flex.flex-column.w-auto
-        - if @user.deleted_at
-          = link_to t('global.button.restore'), restore_user_path(@user), data: { turbo_method: :patch }, class: 'btn btn-primary mb-1'
-          = link_to t('global.button.really_delete'), really_destroy_user_path(@user), class: 'btn btn-primary',
-                  data: { turbo_method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
-        - else
-          = link_to t('global.button.edit'), edit_user_path(@user), class: 'btn btn-primary mb-1',
-                  data: { turbo_stream: true }
-          = link_to t('global.button.payed'), '#', class: 'btn btn-primary mb-1', method: :patch
-          - if can? :delete, User
-            = link_to t('global.button.delete'), user_path(@user), class: 'btn btn-danger mb-1',
-                      data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+  .col-md-4.d-flex.justify-content-center
+    .user-actions.d-flex.flex-column.w-auto
+      - if @user.deleted_at
+        = link_to t('global.button.restore'), restore_user_path(@user), data: { turbo_method: :patch }, class: 'btn btn-primary mb-1'
+        = link_to t('global.button.really_delete'), really_destroy_user_path(@user), class: 'btn btn-primary',
+                data: { turbo_method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
+      - else
+        = link_to t('global.button.edit'), edit_user_path(@user), class: 'btn btn-primary mb-1',
+                data: { turbo_stream: true }
+        = link_to t('global.button.payed'), '#', class: 'btn btn-primary mb-1', method: :patch
+        - if can? :delete, User
+          = link_to t('global.button.delete'), user_path(@user), class: 'btn btn-danger mb-1',
+                    data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }

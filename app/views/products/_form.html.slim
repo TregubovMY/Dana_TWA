@@ -1,40 +1,39 @@
-= turbo_frame_tag 'products' do
-  = render 'shared/errors', object: @product
+= render 'shared/errors', object: @product
 
-  = form_with model: @product do |f|
-    .mb-3.row
-      .col-sm-2.col-form-label
-        = f.label :name
+= form_with model: @product do |f|
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :name
 
-      .col-sm-10
-        = f.text_field :name, class: 'form-control form-control-lg'
+    .col-sm-10
+      = f.text_field :name, class: 'form-control form-control-lg'
 
-    .mb-3.row
-      .col-sm-2.col-form-label
-        = f.label :category_id
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :category_id
 
-      .col-sm-10
-        = f.select :category_id, Category.pluck(:name, :id), {class: 'form-select form-select-lg'},
-                { data: { controller: 'select' } }
+    .col-sm-10
+      = f.select :category_id, Category.pluck(:name, :id), {class: 'form-select form-select-lg'},
+              { data: { controller: 'select' } }
 
-    .mb-3.row
-      .col-sm-2.col-form-label
-        = f.label :price
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :price
 
-      .col-sm-10
-        = f.text_field :price, class: 'form-control form-control-lg'
+    .col-sm-10
+      = f.text_field :price, class: 'form-control form-control-lg'
 
-    .mb-3.row
-      .col-sm-2.col-form-label
-        = f.label :quantity
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :quantity
 
-      .col-sm-10
-        = f.text_field :quantity, class: 'form-control form-control-lg'
+    .col-sm-10
+      = f.text_field :quantity, class: 'form-control form-control-lg'
 
-    .mb-3.row
-      = render 'shared/image_form', form: f
+  .mb-3.row
+    = render 'shared/image_form', form: f
 
-    = f.submit t('global.button.save'), class: 'btn btn-primary'
+  = f.submit t('global.button.save'), class: 'btn btn-primary'
 
-    = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
-            class: 'btn btn-danger'
+  = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
+          class: 'btn btn-danger'

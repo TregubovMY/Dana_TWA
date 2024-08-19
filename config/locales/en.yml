@@ -54,6 +54,7 @@ en:
     orders: Orders
     mailing: Mailing
     log_out: Log out
+    categories: Categories
     user_profile: User profile
     mailing_history: Mailing history
     mailing_settings: Mailing settings
@@ -100,7 +101,7 @@ en:
     web_app:
       button_text: Open Web App
   users:
-    index:
+    nav:
       active: Active
       users_requests: Connection requests
       archive: Archive
@@ -127,10 +128,11 @@ en:
       success: All users were successfully deleted.
       no_users: There are no unapproved users to delete.
   products:
-    index:
+    nav:
       active: Active
       categories: Categories
       deleted: Deleted
+    index:
       add_product: Add Product
     new:
       new_product: New Product
@@ -152,9 +154,10 @@ en:
     really_destroy:
       success: Product was successfully deleted.
   orders:
-    index:
+    nav:
       all_orders: All Orders
       deleted: Deleted
+    index:
       create_order: Create Order
       paid_in_system: Paid in System
       cost: Cost
@@ -167,7 +170,7 @@ en:
     destroy:
       success: "Order was successfully destroyed."
   reports:
-    index:
+    nav:
       general_report: General Report
       user_report: User Report
     user_summaries:

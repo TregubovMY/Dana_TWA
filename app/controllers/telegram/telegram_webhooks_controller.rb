@@ -12,7 +12,7 @@ module Telegram
         respond_with :message, text: t('telegram.messages.open_menu', username: @user.username),
                                reply_markup: {
                                  inline_keyboard: [
-                                   [{ text: 'Открыть сайт', web_app: 'https://panther-kind-usually.ngrok-free.app' }]
+                                   [{ text: 'Открыть сайт', web_app: { url: 'https://panther-kind-usually.ngrok-free.app' } }]
                                  ]
                                }
       else

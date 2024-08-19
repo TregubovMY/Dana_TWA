@@ -1,29 +1,21 @@
 h1 = t('navigation.products')
 
-ul.nav.nav-tabs.mb-4
-  li.nav-item
-    = link_to t('.active'), products_path, class: 'nav-link link-dark'
-  li.nav-item
-    = link_to t('.categories'), categories_path, class: 'nav-link link-dark',
-            data: { turbo_stream: true }
-  li.nav-item
-    = link_to t('.deleted'), archive_products_path, class: 'nav-link link-dark'
+=render 'nav'
 
-= turbo_frame_tag 'products' do
-  = link_to t('.add_product'), new_product_path, data: { turbo_frame: 'modal' },
-          class: 'btn btn-primary' if current_page?(products_path)
+= link_to t('.add_product'), new_product_path, data: { turbo_frame: 'modal' },
+        class: 'btn btn-primary' if current_page?(products_path)
 
-  - scope = 'activerecord.attributes.product'
-  table.table.table-striped.table-hover.mt-2
-    thead
-      th scope="col" = t('.id')
-      th scope="col" = t('name', scope: scope)
-      th scope="col" = t('category', scope: scope)
-      th scope="col" = t('price', scope: scope)
-      th scope="col" = t('quantity', scope: scope)
-      th scope="col" = t('created_at', scope: scope)
-    tbody
-      = render @products
+- scope = 'activerecord.attributes.product'
+table.table.table-striped.table-hover.mt-2
+  thead
+    th scope="col" = t('.id')
+    th scope="col" = t('name', scope: scope)
+    th scope="col" = t('category', scope: scope)
+    th scope="col" = t('price', scope: scope)
+    th scope="col" = t('quantity', scope: scope)
+    th scope="col" = t('created_at', scope: scope)
+  tbody
+    = render @products
 
-  .d-flex.justify-content-center.mt-3
-    = paginate @products
+.d-flex.justify-content-center.mt-3
+  = paginate @products

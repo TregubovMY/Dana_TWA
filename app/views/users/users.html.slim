@@ -1,22 +1,20 @@
-= turbo_frame_tag 'users' do
+= render 'shared/filter', path: users_path if current_page?(users_path)
 
-  = render 'shared/filter', path: users_path if current_page?(users_path)
+- scope = 'activerecord.attributes.user'
+table.table.table-striped.table-hover.mt-2
+  thead
+    th scope="col" = t('id', scope: scope)
+    th scope="col" = t('username', scope: scope)
+    th scope="col" = t('telegram_chat_id', scope: scope)
+    th scope="col" = t('created_at', scope: scope)
+  tbody
+    - @users.each do |user|
+      tr
+        th scope="row" =< user.id
+        td = link_to highlight(user.decorate.name_with_sign, params[:search_query]),
+                user_path(user), data: { turbo_frame: '_top' }
+        td = user.telegram_chat_id
+        td = l(user.created_at, format: :medium)
 
-  - scope = 'activerecord.attributes.user'
-  table.table.table-striped.table-hover.mt-2
-    thead
-      th scope="col" = t('id', scope: scope)
-      th scope="col" = t('username', scope: scope)
-      th scope="col" = t('telegram_chat_id', scope: scope)
-      th scope="col" = t('created_at', scope: scope)
-    tbody
-      - @users.each do |user|
-        tr
-          th scope="row" =< user.id
-          td = link_to highlight(user.decorate.name_with_sign, params[:search_query]),
-                  user_path(user), data: { turbo_frame: '_top' }
-          td = user.telegram_chat_id
-          td = l(user.created_at, format: :medium)
-
-  .d-flex.justify-content-center.mt-3
-    = paginate @users
+.d-flex.justify-content-center.mt-3
+  = paginate @users

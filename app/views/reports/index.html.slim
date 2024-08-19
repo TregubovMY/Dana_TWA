@@ -1,12 +1,6 @@
 h1.mb-3 = t('navigation.reports')
 
-ul.nav.nav-tabs.mb-4
-  li.nav-item
-    = link_to t('.general_report'), reports_path, class: 'nav-link link-dark',
-            data: { turbo_frame: 'reports', toggle: :tab, turbo_stream: true }
-  li.nav-item
-    = link_to t('.user_report'), users_reports_path, class: 'nav-link link-dark',
-            data: { turbo_frame: 'reports', toggle: :tab, turbo_stream: true }
+= render 'nav'
 
 = turbo_frame_tag 'reports' do
   = render 'filter', path: reports_path

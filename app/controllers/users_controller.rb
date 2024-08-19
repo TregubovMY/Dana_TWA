@@ -5,123 +5,75 @@ class UsersController < ApplicationController
 
   def index
     @users = User.filter_by_username(params[:search_query]).approved.includes(:role).page(params[:page]).per(10)
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('users',
-                                                  template: 'users/users', locals: { users: @users })
-      end
-    end
   end
 
   def requests
     @users = User.unapproved.page(params[:page])
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('users',
-                                                  template: 'users/requests', locals: { users: @users })
-      end
-    end
   end
 
   def archive
     @users = User.only_deleted.includes(:role).page(params[:page])
 
-    respond_to do |format|
-      format.html { render 'index' }
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('users',
-                                                  template: 'users/users', locals: { users: @users })
-      end
-    end
+    render 'index'
   end
 
   def show; end
 
-  def edit
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('users', template: 'users/edit', locals: { user: @user })
-      end
-    end
-  end
+  def edit; end
 
   def update
-    respond_to do |format|
-      ActiveRecord::Base.transaction do
-        update_user_role
-        if update_user_attributes
-          format.html { redirect_to user_url(@user), notice: t('.success_updated') }
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace('users',
-                                                      template: 'users/show', locals: { user: @user })
-          end
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-        end
-      end
+    ActiveRecord::Base.transaction do
+      update_user_role
+      update_user_attributes
     end
+
+    redirect_to user_url(@user), notice: t('.success_updated')
+
+  rescue
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
-    respond_to do |format|
-      if @user.destroy
-        TelegramService.after_rejection(chat_id: @user.telegram_chat_id)
-        format.html { redirect_to user_url(@user), notice: t('.success') }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('users',
-                                                    template: 'users/show', locals: { user: @user })
-        end
-      else
-        format.html { render :show }
-      end
+    if @user.destroy
+      TelegramService.after_rejection(chat_id: @user.telegram_chat_id)
+      redirect_to users_path, notice: t('.success')
+    else
+      render :show
     end
   end
 
   def restore
-    respond_to do |format|
-      if @user.restore
-        format.html { redirect_to user_url(@user), notice: t('.success') }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('users',
-                                                    template: 'users/show', locals: { user: @user })
-        end
-      else
-        format.html { render :show }
-      end
+    if @user.restore
+      redirect_to user_url(@user), notice: t('.success')
+    else
+      render :show, status: :unprocessable_entity
     end
   end
 
   def really_destroy
-    respond_to do |format|
-      if @user.really_destroy!
-        format.html { redirect_to archive_users_path, notice: t('.success') }
-      else
-        format.html { render archive_users_path }
-      end
+    if @user.really_destroy!
+      redirect_to archive_users_path, notice: t('.success')
+    else
+      render archive_users_path, status: :unprocessable_entity
     end
   end
 
   def approve
-    respond_to do |format|
-      if @user.approve!
-        TelegramService.after_approve(chat_id: @user.telegram_chat_id)
-        format.html { redirect_to requests_users_path, notice: t('.success') }
-      else
-        format.html { render :index }
-      end
+    if @user.approve!
+      TelegramService.after_approve(chat_id: @user.telegram_chat_id)
+      redirect_to requests_users_path, notice: t('.success')
+    else
+      render :index, status: :unprocessable_entity
     end
   end
 
   def approve_all
-    @users = User.approved
+    @users = User.unapproved
     if @users.update_all(approve: true)
       @users.each { |user| TelegramService.after_approve(chat_id: user.telegram_chat_id) }
       redirect_to requests_users_path, notice: t('.success')
     else
-      redirect_to requests_users_path, notice: t('.no_users')
+      render requests_users_path, notice: t('.no_users')
     end
   end
 
@@ -150,7 +102,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    # params.require(:user).permit(:username, :approve, :deposit, :password, :password_confirmation, :role_id)
     params.require(:user).permit(current_ability.permitted_attributes(:update, @user))
   end
 

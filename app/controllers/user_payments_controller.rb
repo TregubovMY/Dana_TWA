@@ -14,7 +14,7 @@ class UserPaymentsController < ApplicationController
     if PaymentsService.pay_all_orders(@orders)
       redirect_to reports_path, notice: 'Все заказы оплачены'
     else
-      redirect_to reports_path, notice: 'Произошла ошибка при оплате'
+      render reports_path, notice: 'Произошла ошибка при оплате'
     end
   end
 
@@ -28,7 +28,7 @@ class UserPaymentsController < ApplicationController
 
     redirect_to users_reports_path, notice: 'Деньги успешно зачислены'
   rescue StandardError => e
-    redirect_to users_reports_path, alert: "Ошибка при зачислении денег: #{e.message}"
+    render users_reports_path, alert: "Ошибка при зачислении денег: #{e.message}"
   end
 
   def pay_order

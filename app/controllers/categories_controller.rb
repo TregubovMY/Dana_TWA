@@ -4,13 +4,6 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Category.all.page(params[:page]).per(10)
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('products',
-                                                  template: 'categories/index', locals: { categories: @categories })
-      end
-    end
   end
 
   def new

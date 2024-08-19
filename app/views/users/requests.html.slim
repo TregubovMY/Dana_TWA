@@ -1,29 +1,32 @@
-= turbo_frame_tag 'users', data: { turbo_action: 'advance' } do
-  .btn-group
-    = link_to t('.connect_all_users'), approve_all_users_path, class: 'btn btn-secondary',
-            data: { turbo_method: :patch }
-    = link_to t('.delete_all_users'), delete_all_users_path, class: 'btn btn-danger',
-            data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+h1.mb-3 = t('navigation.users')
 
-  table.table.table-striped.table-hover.mt-2
-    thead
-      th scope="col" = t('activerecord.attributes.user.id')
-      th scope="col" = t('activerecord.attributes.user.username')
-      th scope="col" = t('activerecord.attributes.user.telegram_chat_id')
-      th scope="col" = t('activerecord.attributes.user.created_at')
-      th scope="col"
-    tbody
-      - @users.each do |user|
-        tr
-          th scope="row" =< user.id
-          td = link_to user.decorate.name_with_sign, user_path(user), data: { turbo_frame: '_top' }
-          td = user.telegram_chat_id
-          td = l(user.created_at, format: :medium)
-          td
-            .btn-group
-              = link_to t('.connect'), approve_user_path(user), class: 'btn btn-secondary', data: { turbo_method: :patch }
-              = link_to t('global.button.delete'), user_path(user), class: 'btn btn-danger',
-                      data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+= render 'nav'
 
-  .d-flex.justify-content-center.mt-3
-    = paginate @users
+.btn-group
+  = link_to t('.connect_all_users'), approve_all_users_path, class: 'btn btn-secondary',
+          data: { turbo_method: :patch }
+  = link_to t('.delete_all_users'), delete_all_users_path, class: 'btn btn-danger',
+          data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+
+table.table.table-striped.table-hover.mt-2
+  thead
+    th scope="col" = t('activerecord.attributes.user.id')
+    th scope="col" = t('activerecord.attributes.user.username')
+    th scope="col" = t('activerecord.attributes.user.telegram_chat_id')
+    th scope="col" = t('activerecord.attributes.user.created_at')
+    th scope="col"
+  tbody
+    - @users.each do |user|
+      tr
+        th scope="row" =< user.id
+        td = link_to user.decorate.name_with_sign, user_path(user), data: { turbo_frame: '_top' }
+        td = user.telegram_chat_id
+        td = l(user.created_at, format: :medium)
+        td
+          .btn-group
+            = link_to t('.connect'), approve_user_path(user), class: 'btn btn-secondary', data: { turbo_method: :patch }
+            = link_to t('global.button.delete'), user_path(user), class: 'btn btn-danger',
+                    data: { turbo_method: :delete, confirm: t('global.dialog.you_sure') }
+
+.d-flex.justify-content-center.mt-3
+  = paginate @users

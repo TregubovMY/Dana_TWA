@@ -9,13 +9,7 @@ class ProductsController < ApplicationController
 
   def archive
     @products = Product.includes(:category).only_deleted.page(params[:page]).per(14)
-    respond_to do |format|
-      format.html { render 'index' }
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('products',
-                                                  template: 'products/index', locals: { products: @products })
-      end
-    end
+    render 'index'
   end
 
   def show; end
@@ -24,8 +18,7 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @product = Product.new(product_params)
@@ -54,7 +47,6 @@ class ProductsController < ApplicationController
           render turbo_stream: [
             turbo_stream.remove(:modal),
             turbo_stream.prepend('flash', partial: 'shared/flash'),
-            turbo_stream.replace('products', template: 'products/show', locals: { product: @product })
           ]
         end
       else
@@ -64,34 +56,26 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: t('.success') }
+    if @product.destroy!
+      redirect_to products_url, notice: t('.success')
+    else
+      render :show, status: :unprocessable_entity
     end
   end
 
   def restore
-    respond_to do |format|
-      if @product.restore
-        format.html { redirect_to product_path(@product), notice: t('.success') }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('products',
-                                                    template: 'products/show', locals: { product: @product })
-        end
-      else
-        format.html { render :show }
-      end
+    if @product.restore
+      redirect_to product_path(@product), notice: t('.success')
+    else
+      render :show
     end
   end
 
   def really_destroy
-    respond_to do |format|
-      if @product.really_destroy!
-        format.html { redirect_to products_url, notice: t('.success') }
-      else
-        format.html { render :show }
-      end
+    if @product.really_destroy!
+      redirect_to products_url, notice: t('.success')
+    else
+      render :show, status: :unprocessable_entity
     end
   end
 
