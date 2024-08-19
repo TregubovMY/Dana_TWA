@@ -11,7 +11,7 @@
         th scope="col" = t('reports.filter.paid')
         th scope="col"
       tbody
-        = render partial: 'reports/user', collection: @users
+        = render partial: 'reports/user_summaries', collection: @users, as: :user_summary
       tfoot
         tr.table-active
           td.colspan-2 Итого

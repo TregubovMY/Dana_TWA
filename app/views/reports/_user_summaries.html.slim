@@ -1,0 +1,13 @@
+tr
+  td = user_summary.decorate.name_with_sign
+  td = user_summary.deposit
+  td = user_summary.total_price
+  td = user_summary.total_count
+  - state = Payment.states.key(params[:state].to_i)
+  td = params[:state] ? t("activerecord.attributes.payment.#{state}") : t("activerecord.attributes.payment.all")
+  td
+    .btn-group
+      = link_to t('.fully_paid'), pay_all_orders_user_path(user_summary),
+              class: 'btn btn-primary', data: { turbo: false, action: 'user-payments#submitWithDate' }
+      = link_to t('.enter_transfer_manually'), payment_user_path(user_summary),
+              class: 'btn btn-secondary', data: { turbo_frame: :modal }

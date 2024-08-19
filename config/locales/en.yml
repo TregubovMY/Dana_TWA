@@ -170,7 +170,7 @@ en:
     index:
       general_report: General Report
       user_report: User Report
-    user:
+    user_summaries:
       fully_paid: Fully Paid
       enter_transfer_manually: Enter Transfer Manually
     filter:

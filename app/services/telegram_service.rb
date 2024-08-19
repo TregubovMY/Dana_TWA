@@ -25,34 +25,39 @@ class TelegramService
     Telegram.bot.send_message(chat_id: user.telegram_chat_id, text: I18n.t('telegram.messages.deleted_impossible'))
   end
 
-  def self.your_orders(user:, orders:) # TODO refactor и не работает подсчет правильно, оптимизировать
-    orders_list = ''
-    current_month_orders = 0
-    debt = ReportsService.summarize_orders_price([Order.find_by(state: :created, user_id: user.id)])
-    orders.each do |order|
-      orders_list += "#{order.product.name} #{I18n.l(order.created_at, format: :medium)},
-                      #{I18n.t('activerecord.attributes.payment.amount')}:
-                      #{order.payment.amount} ₽ (#{order.payment.state})\n"
-      current_month_orders += order.payment.amount if order.state == :created
-    end
-
-    Telegram.bot.send_message(chat_id: user.telegram_chat_id, text: I18n.t('telegram.messages.your_orders',
-                                                                           orders_list:,
-                                                                           current_month_orders:,
-                                                                           debt:,
-                                                                           deposit: user.deposit))
+  # TODO: Еще сильнее упростить запросы
+  def self.your_orders(user:)
+    orders_price_this_month, count_orders_this_month = ReportsService.summarize_price_and_count_orders_users_this_month(user)
+    orders_price_last_month, count_orders_last_month = ReportsService.summarize_price_and_count_orders_users_last_month(user)
+    total_debt = ReportsService.summarize_price_created_orders_for(user)
+    orders = user.orders.includes(:product).where(state: :created).order(created_at: :desc)
+                 .map do |order|
+                   "#{order.product.name} #{I18n.l(order.created_at, format: :long)} цена
+                    #{order.product.price} ₽ (#{I18n.t("activerecord.attributes.order.created")})"
+                 end.join("\n")
+    Telegram.bot.send_message(chat_id: user.telegram_chat_id,
+                              text: I18n.t('telegram.messages.your_orders',
+                                           orders:,
+                                           count_orders_this_month:,
+                                           count_orders_this_month_text: I18n.t('order', count: count_orders_this_month),
+                                           orders_price_this_month:,
+                                           count_orders_last_month:,
+                                           count_orders_last_month_text: I18n.t('order', count: count_orders_last_month),
+                                           orders_price_last_month:,
+                                           total_debt:,
+                                           deposit: user.deposit))
   end
 
-  def self.send_payment_request # TODO refactor и вероятно тоже не работает
-    settings = MailingSetting.first
+  # TODO: Переделать в пару запросов через агрегатные функции и нормальный sql запрос
+  def self.send_payment_request
+    settings = MailingSetting.find(MailingSetting.DEFAULT_MAILING_SETTING_ID)
     User.approved.each do |user|
-      total_debt = ReportsService.summarize_price_orders_users([user])
-      debt = ReportsService.summarize_price_orders_users_last_month([user])
+      total_debt = ReportsService.summarize_price_created_orders_for(user)
       Telegram.bot.send_message(chat_id: user.telegram_chat_id,
-                                text: I18n.t('telegram.messages.payment_request', debt:,
-                                                                                  total_debt:,
-                                                                                  phone_number: settings.phone_number,
-                                                                                  bank_name: settings.bank))
+                                text: I18n.t('telegram.messages.payment_request',
+                                             total_debt:,
+                                             phone_number: settings.phone,
+                                             bank_name: settings.bank.name))
     end
   end
 

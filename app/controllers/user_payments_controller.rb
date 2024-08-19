@@ -16,9 +16,9 @@ class UserPaymentsController < ApplicationController
   end
 
   def deposit_money
-    ActiveRecord::Base.transaction do
-      user_replenishment = params[:user][:deposit].to_f
+    user_replenishment = params[:user][:deposit].to_f
 
+    ActiveRecord::Base.transaction do
       @user.update!(deposit: @user.deposit + user_replenishment)
       PaymentsService.process_orders_sequentially_at(@user)
     end

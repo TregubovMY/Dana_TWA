@@ -49,20 +49,6 @@ class User < ApplicationRecord
     orders.includes(:payment).sum('payments.amount')
   end
 
-
-  # def really_destroy_with_dependents
-  #   user_orders = Order.with_deleted.where(user_id: @user.id)
-  #
-  #   ActiveRecord::Base.transaction do
-  #     user_orders.each do |order|
-  #       Payment.with_deleted.find(order.id).really_destroy!
-  #       order.really_destroy!
-  #     end
-  #
-  #     really_destroy!
-  #   end
-  # end
-
   def self.create_user_telegram(telegram_username:, telegram_chat_id:)
     role = Role.find_by(name: 'user')
 

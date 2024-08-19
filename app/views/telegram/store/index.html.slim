@@ -11,7 +11,8 @@
             = link_to 'Удалить последний заказ', delete_last_orders_path, class: 'dropdown-item',
                     data: { turbo_method: :delete }
           li
-            = link_to 'Посмотреть список всех заказов', users_orders_path, class: 'dropdown-item'
+            = link_to 'Посмотреть список всех заказов', users_orders_path, class: 'dropdown-item',
+                    date: { turbo: false }
 
   .row.mt-3
     .container

@@ -9,13 +9,21 @@ class ReportsController < ApplicationController
 
   def index
     @orders = apply_scopes(Order).includes(:user, :payment, :product).page(params[:page]).per(8)
-    @summarize_orders_price = ReportsService.summarize_orders_price(@orders)
+
+    @price_orders = @orders.sum { |el| el.payment.amount }
+    @count_orders = @orders.count
   end
 
   def users_reports
-    @users = apply_scopes(User).approved.includes(:orders, :payments).page(params[:page]).per(8)
-    @price_orders = ReportsService.summarize_price_orders_users(@users)
-    @count_orders = ReportsService.count_orders(@users)
+    @users = apply_scopes(User).approved
+                               .joins(orders: :payment)
+                               .group('users.id')
+                               .select('users.*, SUM(payments.amount) AS total_price, COUNT(orders.id) AS total_count')
+                               .order(id: :desc)
+                               .page(params[:page]).per(8)
+
+    @price_orders = @users.sum(&:total_price)
+    @count_orders = @users.sum(&:total_count)
   end
 
   private

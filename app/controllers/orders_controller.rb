@@ -22,9 +22,7 @@ class OrdersController < ApplicationController
   end
 
   def users
-    @orders = current_user.orders.includes(:product, :payment)
-
-    TelegramService.your_orders(user: current_user, orders: @orders)
+    TelegramService.your_orders(user: current_user)
     redirect_to store_index_path, notice: "Заказы отправлены сообщением в чат"
   end
 
@@ -75,7 +73,7 @@ class OrdersController < ApplicationController
   end
 
   def delete_last
-    last_order = current_user.orders.filter_by_state(:created).last # TODO: открытые нужно выбрать
+    last_order = current_user.orders.filter_by_state(:created).last
 
     Rails.logger.info "Last order: #{last_order.inspect}, time: #{Time.now}, state: #{last_order.cancelled?}"
 

@@ -9,7 +9,12 @@ module Telegram
 
       if @user&.approve
         TelegramService.show_web_app_button(chat_id: chat['id'])
-        respond_with :message, text: t('telegram.messages.open_menu')
+        respond_with :message, text: t('telegram.messages.open_menu', username: @user.username),
+                               reply_markup: {
+                                 inline_keyboard: [
+                                   [{ text: 'Открыть сайт', web_app: 'https://panther-kind-usually.ngrok-free.app' }]
+                                 ]
+                               }
       else
         telegram_username = from['username'] || from['first_name']
         User.create_user_telegram(telegram_username:, telegram_chat_id: from['id']) unless @user

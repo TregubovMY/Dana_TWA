@@ -8,6 +8,7 @@ class PaymentsService
     end
   end
 
+  # TODO: Нужно чтобы прошелся по всем заказам
   def self.process_orders_sequentially_at(user)
     orders = user.orders.where(state: :created).includes(:payment).order(created_at: :desc)
 
