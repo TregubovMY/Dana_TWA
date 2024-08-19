@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Start
 
-Things you may want to cover:
+#### 1) Install dependencies
+        bundle install
+        yarn install
 
-* Ruby version
+#### 2) Create database
+        rails db:create
+        rails db:migrate
+        rails db:seed
 
-* System dependencies
+#### 3) Start server
+        bin/dev
+        ngrok start --all
+        rails telegram:bot:poller
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### 4) Url to bot
+        https://t.me/Dana_twa_bot
+    
