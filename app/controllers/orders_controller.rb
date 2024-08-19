@@ -11,19 +11,12 @@ class OrdersController < ApplicationController
 
   def archive
     @orders = Order.only_deleted.includes(:product, :user).page(params[:page]).per(14)
-
-    respond_to do |format|
-      format.html { render 'index' }
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('orders',
-                                                  template: 'orders/index', locals: { orders: @orders })
-      end
-    end
+    respond_with_template('orders/index')
   end
 
   def users
     TelegramService.your_orders(user: current_user)
-    redirect_to store_index_path, notice: "Заказы отправлены сообщением в чат"
+    redirect_to store_index_path, notice: 'Заказы отправлены сообщением в чат'
   end
 
   def new
@@ -32,37 +25,32 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        flash.now[:success] = t('.success')
-        format.html { redirect_to order_url(@order), notice: t('.success') }
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.remove(:modal),
-            turbo_stream.prepend('flash', partial: 'shared/flash')
-          ]
-        end
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    process_order_transaction(@order, -1) do
+      flash.now[:success] = t('.success')
+      respond_with_success
     end
+  rescue ActiveRecord::RecordInvalid => e
+    respond_with_error(:new, e)
   end
 
   def create_for_product
     product = Product.find(params[:product_id])
-    order = current_user.orders.create(product:)
 
-    if order.save
+    if product.quantity <= 0
+      redirect_to store_index_path, alert: 'Товара нет в наличии'
+      return
+    end
+
+    order = current_user.orders.build(product: product)
+    process_order_transaction(order, -1) do
       TelegramService.after_create_order(user: current_user, product: product)
       redirect_to store_index_path, notice: 'Заказ успешно создан'
-    else
-      redirect_to store_index_path, alert: 'Ошибка при создании заказа'
     end
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to store_index_path, alert: "Ошибка при создании заказа: #{e.message}"
   end
 
   def destroy
-    Rails.logger.info "Order: #{params}"
     @order = Order.find(params[:id])
     if @order.destroy
       redirect_to orders_path, notice: t('.success')
@@ -75,15 +63,12 @@ class OrdersController < ApplicationController
   def delete_last
     last_order = current_user.orders.filter_by_state(:created).last
 
-    Rails.logger.info "Last order: #{last_order.inspect}, time: #{Time.now}, state: #{last_order.cancelled?}"
-
-    if last_order.cancelled?
-      last_order.transaction do
+    if last_order&.cancelled?
+      process_order_transaction(last_order, 1) do
         last_order.update!(state: :cancelled)
         last_order.payment.update!(state: :failed)
+        TelegramService.after_delete_order(user: current_user)
       end
-      Rails.logger.info "TelegramService.after_delete_order: #{current_user.inspect}"
-      TelegramService.after_delete_order(user: current_user)
       redirect_to store_index_path, notice: 'Последний заказ отменен'
     else
       TelegramService.deleted_impossible(user: current_user)
@@ -95,5 +80,55 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:state, :product_id, :user_id)
+  end
+
+  def update_inventory(product, quantity_change)
+    product.with_lock do
+      new_quantity = product.quantity + quantity_change
+      raise ActiveRecord::RecordInvalid, product if new_quantity.negative?
+
+      product.update!(quantity: new_quantity)
+    end
+  end
+
+  def process_order_transaction(order, quantity_change)
+    ActiveRecord::Base.transaction do
+      update_inventory(order.product, quantity_change)
+      order.save!
+      yield if block_given?
+    end
+  end
+
+  def respond_with_template(template)
+    respond_to do |format|
+      format.html { render template }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('orders', template:, locals: { orders: @orders })
+      end
+    end
+  end
+
+  def respond_with_success
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove(:modal),
+          turbo_stream.prepend('flash', partial: 'shared/flash')
+        ]
+      end
+    end
+  end
+
+  def respond_with_error(template, error)
+    flash.now[:error] = error.message
+    respond_to do |format|
+      format.html { render template, status: :unprocessable_entity }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove(:modal),
+          turbo_stream.prepend('flash', partial: 'shared/flash')
+        ]
+      end
+    end
   end
 end

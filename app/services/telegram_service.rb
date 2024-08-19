@@ -10,7 +10,7 @@ class TelegramService
   end
 
   def self.after_create_order(user:, product:)
-    total_debt = ReportsService.summarize_price_orders_users([user])
+    total_debt, _ = ReportsService.summarize_price_and_count_orders([user])
     Telegram.bot.send_message(chat_id: user.telegram_chat_id,
                               text: I18n.t('telegram.messages.order_created', product_name: product.name,
                                                                               price: product.price,

@@ -7,12 +7,15 @@ class UserPaymentsController < ApplicationController
 
   def payment; end
 
-  # TODO: Фиксить весь код
   def pay_all_orders
     params.merge! DateFilterService.prepare_date_filter_params(params[:start_date_between])
 
     @orders = apply_scopes(Order).filter_by_state(:created).where(user_id: params[:id]).includes(:payment)
-    PaymentsService.pay_all_orders(@orders)
+    if PaymentsService.pay_all_orders(@orders)
+      redirect_to reports_path, notice: 'Все заказы оплачены'
+    else
+      redirect_to reports_path, notice: 'Произошла ошибка при оплате'
+    end
   end
 
   def deposit_money
@@ -22,22 +25,24 @@ class UserPaymentsController < ApplicationController
       @user.update!(deposit: @user.deposit + user_replenishment)
       PaymentsService.process_orders_sequentially_at(@user)
     end
+
+    redirect_to users_reports_path, notice: 'Деньги успешно зачислены'
+  rescue StandardError => e
+    redirect_to users_reports_path, alert: "Ошибка при зачислении денег: #{e.message}"
   end
 
   def pay_order
     @order = Order.includes(:payment).find(params[:id])
     if PaymentsService.pay_all_orders([@order])
-      redirect_to orders_path
+      redirect_to product_path(@order.product), notice: 'Заказ оплачен'
     else
-      # flash.now[:error] = t('.error')
-      render order_path(@order)
+      render product_path(@order.product), notice: 'Произошла ошибка при оплате'
     end
   end
 
   private
 
   def set_user
-    # Rails.logger.info("Params: #{params[:id]}")
     @user = User.find(params[:id])
   end
 end

@@ -8,11 +8,11 @@
           i.bi.bi-three-dots-vertical
         ul.dropdown-menu
           li
-            = link_to 'Удалить последний заказ', delete_last_orders_path, class: 'dropdown-item',
+            = link_to 'Удалить последний заказ', delete_last_orders_path, class: 'dropdown-item', method: :delete,
                     data: { turbo_method: :delete }
           li
             = link_to 'Посмотреть список всех заказов', users_orders_path, class: 'dropdown-item',
-                    date: { turbo: false }
+                    date: { turbo_stream: false }
 
   .row.mt-3
     .container

@@ -7,9 +7,8 @@ class Order < ApplicationRecord
   belongs_to :user, -> { with_deleted }, inverse_of: :orders
   has_one :payment, dependent: :destroy
 
-  after_create :set_cancelable_until
+  before_create :set_cancelable_until
   after_create :create_payment
-  after_create :change_product_quantity # TODO: дичь нужно делать в контроллере
 
   scope :filter_by_username, ->(name) { joins(:user).merge(User.filter_by_username(name)) }
   scope :filter_by_date, ->(start_date, end_date) { where(created_at: start_date..end_date) }
@@ -26,20 +25,6 @@ class Order < ApplicationRecord
   end
 
   def cancelled?
-    state == :cancel ? false : cancelable_until > Time.zone.now
-  end
-
-  def change_product_quantity
-    Rails.logger.info "Before change - Product quantity: #{product.quantity}, state: #{state}"
-
-    if cancelled?
-      Rails.logger.info "State is cancelled, incrementing quantity."
-      product.increment!(:quantity, 1)
-    elsif created?
-      Rails.logger.info "State is created, decrementing quantity."
-      product.decrement!(:quantity, 1)
-    end
-
-    Rails.logger.info "After change - Product quantity: #{product.quantity}, state: #{state}"
+    state == :cancel ? false : cancelable_until > Time.now
   end
 end
